@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mark_it/src/features/authentication/signin_screen.dart';
-import 'package:mark_it/src/features/authentication/successful_password_change_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/signin_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/successful_password_change_screen.dart';
 
-import '../common widgets/custom_eleveted_button.dart';
-import '../common widgets/custom_text_field.dart';
-import '../utils/theme/theme.dart';
+import '../../common widgets/custom_eleveted_button.dart';
+import '../../common widgets/custom_text_field.dart';
+import '../../utils/theme/theme.dart';
 import 'otp_verification.dart';
 
 class CreateNewPasswordScreen extends StatelessWidget {

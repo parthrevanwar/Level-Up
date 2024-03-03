@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mark_it/src/features/authentication/forgot_password_screen.dart';
-import 'package:mark_it/src/features/authentication/signupscreen.dart';
-import 'package:mark_it/src/features/authentication/social_login_buttons.dart';
+import 'package:get/get.dart';
+import 'package:mark_it/src/features/authentication/controllers/signup_controller.dart';
+import 'package:mark_it/src/features/authentication/screens/forgot_password_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/signupscreen.dart';
+import 'package:mark_it/src/features/authentication/screens/social_login_buttons.dart';
 import 'package:mark_it/src/features/common%20widgets/custom_eleveted_button.dart';
 import 'package:mark_it/src/features/common%20widgets/custom_text_field.dart';
 import 'package:mark_it/src/features/utils/theme/theme.dart';
@@ -14,8 +16,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final _emailcontroller = TextEditingController();
-  final _passwordcontroller = TextEditingController();
+  final controller = Get.put(SignUpController());
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +57,24 @@ class _SignInScreenState extends State<SignInScreen> {
             SizedBox(
               height: 30,
             ),
-            CustomTextField(
-                textcontroller: _emailcontroller,
-                hinttext: "Enter your email",
-                labeltext: "Email"),
-            SizedBox(
-              height: 10,
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  CustomTextField(
+                      textcontroller: controller.email,
+                      hinttext: "Enter your email",
+                      labeltext: "Email"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextField(
+                      textcontroller: controller.password,
+                      hinttext: "Enter your password",
+                      labeltext: "Password"),
+                ],
+              ),
             ),
-            CustomTextField(
-                textcontroller: _passwordcontroller,
-                hinttext: "Enter your password",
-                labeltext: "Password"),
             SizedBox(
               height: 10,
             ),
@@ -76,7 +85,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (BuildContext context) => ForgotPasswordScreen()));
+                          builder: (BuildContext context) =>
+                              ForgotPasswordScreen()));
                 },
                 child: Text(
                   "Forgot Password?",
@@ -88,7 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ),
             SizedBox(height: 20),
-            CustomElevetedButtonDark(press: (){}, name: "Login"),
+            CustomElevetedButtonDark(press: () {}, name: "Login"),
             SizedBox(
               height: 20,
             ),
@@ -117,7 +127,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.pushReplacement(
                         context,
                         new MaterialPageRoute(

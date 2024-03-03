@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mark_it/src/features/authentication/signin_screen.dart';
-import 'package:mark_it/src/features/authentication/social_login_buttons.dart';
+import 'package:mark_it/src/features/authentication/screens/signin_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/social_login_buttons.dart';
 
-import '../common widgets/custom_eleveted_button.dart';
-import '../common widgets/custom_text_field.dart';
-import '../utils/theme/theme.dart';
+import '../../common widgets/custom_eleveted_button.dart';
+import '../../common widgets/custom_text_field.dart';
+import '../../utils/theme/theme.dart';
 import 'otp_verification.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {

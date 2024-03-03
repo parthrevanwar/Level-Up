@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mark_it/src/features/authentication/signin_screen.dart';
-import 'package:mark_it/src/features/authentication/signupscreen.dart';
+import 'package:mark_it/src/features/authentication/screens/signin_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/signupscreen.dart';
 import 'package:mark_it/src/features/common%20widgets/custom_eleveted_button.dart';
 
-import '../utils/theme/theme.dart';
+import '../../utils/theme/theme.dart';
 
 class GetStarted extends StatelessWidget {
   const GetStarted({super.key});

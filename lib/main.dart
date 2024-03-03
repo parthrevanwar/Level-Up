@@ -1,10 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mark_it/src/features/authentication/get_started.dart';
-import 'package:mark_it/src/features/authentication/signin_screen.dart';
-import 'package:mark_it/src/features/authentication/signupscreen.dart';
+import 'package:get/get.dart';
+import 'package:mark_it/src/features/authentication/screens/get_started.dart';
 import 'package:mark_it/src/features/utils/theme/theme.dart';
+import 'package:mark_it/src/repository/authentication_repository/authenitication_repo.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  ).then((value) => Get.put(AuthenticationRepository()));
   runApp(const MyApp());
 }
 
@@ -20,4 +27,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

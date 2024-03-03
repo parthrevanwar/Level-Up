@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:mark_it/src/features/authentication/otp_verification.dart';
-import 'package:mark_it/src/features/authentication/signin_screen.dart';
-import 'package:mark_it/src/features/authentication/social_login_buttons.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:mark_it/src/features/authentication/screens/otp_verification.dart';
+import 'package:mark_it/src/features/authentication/screens/signin_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/social_login_buttons.dart';
 
-import '../common widgets/custom_eleveted_button.dart';
-import '../common widgets/custom_text_field.dart';
-import '../utils/theme/theme.dart';
+import '../../common widgets/custom_eleveted_button.dart';
+import '../../common widgets/custom_text_field.dart';
+import '../../utils/theme/theme.dart';
+import '../controllers/signup_controller.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
+
   final _usernamecontroller = TextEditingController();
   final _emailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
-  final _confirmpasswordcontroller=TextEditingController();
+  final _confirmpasswordcontroller = TextEditingController();
+
+  final controller = Get.put(SignUpController());
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,37 +59,51 @@ class SignUpScreen extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            CustomTextField(
-                textcontroller: _usernamecontroller,
-                hinttext: "Enter a username",
-                labeltext: "Username"),
-            SizedBox(
-              height: 10,
-            ),
-            CustomTextField(
-                textcontroller: _emailcontroller,
-                hinttext: "Enter an email",
-                labeltext: "Email"),
-            SizedBox(
-              height: 10,
-            ),
-            CustomTextField(
-                textcontroller: _passwordcontroller,
-                hinttext: "Enter your password",
-                labeltext: "Password"),
-            SizedBox(
-              height: 10,
-            ),
-            CustomTextField(
-                textcontroller: _confirmpasswordcontroller,
-                hinttext: "Confirm your password",
-                labeltext: "Confirm Password"),
-            SizedBox(
-              height: 10,
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  CustomTextField(
+                      textcontroller: _usernamecontroller,
+                      hinttext: "Enter a username",
+                      labeltext: "Username"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextField(
+                      textcontroller: controller.email,
+                      hinttext: "Enter an email",
+                      labeltext: "Email"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextField(
+                      textcontroller: controller.password,
+                      hinttext: "Enter your password",
+                      labeltext: "Password"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextField(
+                      textcontroller: _confirmpasswordcontroller,
+                      hinttext: "Confirm your password",
+                      labeltext: "Confirm Password"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 30),
-            CustomElevetedButtonDark(press: (){
-            }, name: "Sign up"),
+            CustomElevetedButtonDark(
+                press: () {
+                  if (_formKey.currentState!.validate()) {
+                    SignUpController.instance.registerUser(
+                        controller.email.text.trim(),
+                        controller.password.text.trim());
+                  }
+                },
+                name: "Sign up"),
             SizedBox(
               height: 20,
             ),
@@ -111,7 +132,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.pushReplacement(
                         context,
                         new MaterialPageRoute(
