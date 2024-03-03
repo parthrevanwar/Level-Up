@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mark_it/src/features/authentication/signupscreen.dart';
-import 'package:mark_it/src/features/common%20widgets/custom_eleveted_button.dart';
-import 'package:mark_it/src/features/common%20widgets/custom_text_field.dart';
-import 'package:mark_it/src/features/utils/theme/theme.dart';
+import 'package:mark_it/src/features/authentication/signin_screen.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+import '../common widgets/custom_eleveted_button.dart';
+import '../common widgets/custom_text_field.dart';
+import '../utils/theme/theme.dart';
 
-  @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({super.key});
+  final _usernamecontroller = TextEditingController();
   final _emailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
+  final _confirmpasswordcontroller=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +44,22 @@ class _SignInScreenState extends State<SignInScreen> {
               height: 20,
             ),
             Text(
-              "Welcome back! Glad\nto see you again!",
+              "Hello! Register to get\nstarted",
               style: Theme.of(context).textTheme.titleLarge,
             ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomTextField(
+                textcontroller: _usernamecontroller,
+                hinttext: "Enter a username",
+                labeltext: "Username"),
             SizedBox(
               height: 15,
             ),
             CustomTextField(
                 textcontroller: _emailcontroller,
-                hinttext: "Enter your email",
+                hinttext: "Enter an email",
                 labeltext: "Email"),
             SizedBox(
               height: 10,
@@ -68,28 +71,22 @@ class _SignInScreenState extends State<SignInScreen> {
             SizedBox(
               height: 10,
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: () {},
-                child: Text(
-                  "Forgot Password?",
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppTheme.colors.lightgray,
-                      ),
-                  textAlign: TextAlign.left,
-                ),
-              ),
+            CustomTextField(
+                textcontroller: _confirmpasswordcontroller,
+                hinttext: "Confirm your password",
+                labeltext: "Confirm Password"),
+            SizedBox(
+              height: 10,
             ),
             SizedBox(height: 30),
-            CustomElevetedButton(press: (){}, name: "Login"),
+            CustomElevetedButton(press: (){}, name: "Sign up"),
             SizedBox(
               height: 20,
             ),
             Row(children: <Widget>[
               Expanded(child: Divider()),
               Text(
-                "    Or Login with    ",
+                "    Or Register with    ",
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: AppTheme.colors.lightgray,
                     ),
@@ -101,6 +98,20 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             Row(
               children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(
+                        color: Color(0xFFE8ECF4),
+                      ),
+                    ),
+                    height: 60,
+                    child: Icon(
+                      Icons.add,
+                    ),
+                  ),
+                ),
                 SizedBox(width: 10),
                 Expanded(
                   child: Container(
@@ -110,8 +121,10 @@ class _SignInScreenState extends State<SignInScreen> {
                         color: Color(0xFFE8ECF4),
                       ),
                     ),
-                    height: 100,
-                    child: Image.asset("assets/icons/google.png"),
+                    height: 60,
+                    child: Icon(
+                      Icons.add,
+                    ),
                   ),
                 ),
                 SizedBox(width: 10),
@@ -136,7 +149,7 @@ class _SignInScreenState extends State<SignInScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Don’t have an account? ",
+                  "Already have an account? ",
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: AppTheme.colors.black,
                       ),
@@ -146,10 +159,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     Navigator.pushReplacement(
                         context,
                         new MaterialPageRoute(
-                            builder: (BuildContext context) => SignUpScreen()));
+                            builder: (BuildContext context) => SignInScreen()));
                   },
                   child: Text(
-                    "Register Now",
+                    "Login Now",
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: AppTheme.colors.Primary,
                         ),
