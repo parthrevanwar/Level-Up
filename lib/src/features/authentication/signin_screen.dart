@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mark_it/src/features/authentication/forgot_password_screen.dart';
 import 'package:mark_it/src/features/authentication/signupscreen.dart';
+import 'package:mark_it/src/features/authentication/social_login_buttons.dart';
 import 'package:mark_it/src/features/common%20widgets/custom_eleveted_button.dart';
 import 'package:mark_it/src/features/common%20widgets/custom_text_field.dart';
 import 'package:mark_it/src/features/utils/theme/theme.dart';
@@ -52,7 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(
-              height: 15,
+              height: 30,
             ),
             CustomTextField(
                 textcontroller: _emailcontroller,
@@ -71,7 +72,12 @@ class _SignInScreenState extends State<SignInScreen> {
             Align(
               alignment: Alignment.centerRight,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (BuildContext context) => ForgotPasswordScreen()));
+                },
                 child: Text(
                   "Forgot Password?",
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -81,8 +87,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 30),
-            CustomElevetedButton(press: (){}, name: "Login"),
+            SizedBox(height: 20),
+            CustomElevetedButtonDark(press: (){}, name: "Login"),
             SizedBox(
               height: 20,
             ),
@@ -99,38 +105,7 @@ class _SignInScreenState extends State<SignInScreen> {
             SizedBox(
               height: 20,
             ),
-            Row(
-              children: [
-                SizedBox(width: 10),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(
-                        color: Color(0xFFE8ECF4),
-                      ),
-                    ),
-                    height: 100,
-                    child: Image.asset("assets/icons/google.png"),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(
-                        color: Color(0xFFE8ECF4),
-                      ),
-                    ),
-                    height: 60,
-                    child: Icon(
-                      Icons.add,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            SocialLogin(),
             Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

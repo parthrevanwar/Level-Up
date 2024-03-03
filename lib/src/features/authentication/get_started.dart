@@ -17,14 +17,14 @@ class GetStarted extends StatelessWidget {
             child: Column(
               children: [
                 Spacer(),
-                CustomElevetedButton(press: () {
+                CustomElevetedButtonDark(press: () {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
                           builder: (BuildContext context) => SignInScreen()));
                 }, name: "Login"),
                 SizedBox(height: 20,),
-                CustomElevetedButton(press: () {
+                CustomElevetedButtonLight(press: () {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(

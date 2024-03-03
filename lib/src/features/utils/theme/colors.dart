@@ -8,6 +8,5 @@ class Appcolors{
   final white =const Color(0xFFFFFF);
   final black =const Color(0xFF1E232C);
   final verylightblue =const Color(0xFFF7F8F9);
-
   const Appcolors();
 }
