@@ -28,7 +28,7 @@ class SocialLogin extends StatelessWidget {
         Expanded(
           child: GestureDetector(
             onTap: (){
-              AuthenticationRepository.instance.signInWithGoogle();
+              // AuthenticationRepository.instance.signInWithGoogle();
             },
             child: Container(
               decoration: BoxDecoration(

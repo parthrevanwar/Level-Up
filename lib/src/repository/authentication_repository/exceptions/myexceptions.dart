@@ -6,7 +6,7 @@ class MyExceptions implements Exception{
   factory MyExceptions.fromCode(String code){
     switch(code){
       case 'email-already-in-use' :
-        return const MyExceptions('AN account already exists for that email.');
+        return const MyExceptions('An account already exists for that email.');
       case 'invalid-email' :
         return const MyExceptions('Email is not valid or badly formatted.');
       case 'weak-password' :
@@ -15,8 +15,8 @@ class MyExceptions implements Exception{
         return const MyExceptions('This user has been disabled. Please contact support for help.');
       case 'user-not-found' :
         return const MyExceptions('InValid Details, please create an account.');
-      case 'wrong-password' :
-        return const MyExceptions('Incorrect Password ,please try again');
+      case 'invalid-credential' :
+        return const MyExceptions('Incorrect email or Password ,please try again');
       case 'too-many-requests' :
         return const MyExceptions('too many request,service Temporarily blocked');
       case 'invalid-argument' :
@@ -30,7 +30,7 @@ class MyExceptions implements Exception{
       case 'uid-already-exists' :
         return const MyExceptions('The provided uid is already in use');
       default :
-        return const MyExceptions();
+        return MyExceptions(code);
     }
   }
 }

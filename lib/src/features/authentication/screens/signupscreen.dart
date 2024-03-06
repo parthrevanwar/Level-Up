@@ -101,7 +101,9 @@ class SignUpScreen extends StatelessWidget {
                     SignUpController.instance.createUser(
                         user,
                         controller.email.text.trim(),
-                        controller.password.text.trim());
+                        controller.password.text.trim(),
+                      controller.confirmpassword.text.trim(),
+                    );
                   }
                 },
                 name: "Sign up"),
