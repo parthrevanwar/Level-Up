@@ -41,6 +41,7 @@ dependencies:
   flutter_otp_text_field: ^1.1.1
   flutter_svg: ^2.0.10+1
   get: ^4.6.6
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +64,7 @@ flutter:
    - assets/images/start.png
    - assets/icons/apple.png
    - assets/images/google.png
+   - assets/images/mailverification.png
    - assets/icons/facebook.png
    - assets/images/greentick.svg
   #   - images/a_dot_ham.jpeg

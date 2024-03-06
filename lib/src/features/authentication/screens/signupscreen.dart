@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:mark_it/src/features/authentication/models/user.dart';
 import 'package:mark_it/src/features/authentication/screens/otp_verification.dart';
 import 'package:mark_it/src/features/authentication/screens/signin_screen.dart';
 import 'package:mark_it/src/features/authentication/screens/social_login_buttons.dart';
@@ -12,11 +13,6 @@ import '../controllers/signup_controller.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
-
-  final _usernamecontroller = TextEditingController();
-  final _emailcontroller = TextEditingController();
-  final _passwordcontroller = TextEditingController();
-  final _confirmpasswordcontroller = TextEditingController();
 
   final controller = Get.put(SignUpController());
   final _formKey = GlobalKey<FormState>();
@@ -64,7 +60,7 @@ class SignUpScreen extends StatelessWidget {
               child: Column(
                 children: [
                   CustomTextField(
-                      textcontroller: _usernamecontroller,
+                      textcontroller: controller.username,
                       hinttext: "Enter a username",
                       labeltext: "Username"),
                   SizedBox(
@@ -85,7 +81,7 @@ class SignUpScreen extends StatelessWidget {
                     height: 10,
                   ),
                   CustomTextField(
-                      textcontroller: _confirmpasswordcontroller,
+                      textcontroller: controller.confirmpassword,
                       hinttext: "Confirm your password",
                       labeltext: "Confirm Password"),
                   SizedBox(
@@ -98,7 +94,12 @@ class SignUpScreen extends StatelessWidget {
             CustomElevetedButtonDark(
                 press: () {
                   if (_formKey.currentState!.validate()) {
-                    SignUpController.instance.registerUser(
+                    final user = UserModel(
+                        email: controller.email.text.trim(),
+                        password: controller.password.text.trim(),
+                        username: controller.username.text.trim());
+                    SignUpController.instance.createUser(
+                        user,
                         controller.email.text.trim(),
                         controller.password.text.trim());
                   }

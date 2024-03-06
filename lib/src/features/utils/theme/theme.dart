@@ -7,6 +7,7 @@ class AppTheme {
   static const colors = Appcolors();
   static ThemeData lightTheme=ThemeData(
     brightness: Brightness.light,
+    scaffoldBackgroundColor: Colors.white,
     textTheme: TextTheme(
       titleLarge: TextStyle(
         color: Colors.black,

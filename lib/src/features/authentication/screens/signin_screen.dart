@@ -8,6 +8,8 @@ import 'package:mark_it/src/features/common%20widgets/custom_eleveted_button.dar
 import 'package:mark_it/src/features/common%20widgets/custom_text_field.dart';
 import 'package:mark_it/src/features/utils/theme/theme.dart';
 
+import '../controllers/signin_controller.dart';
+
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -16,7 +18,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final controller = Get.put(SignUpController());
+  final controller = Get.put(SignInController());
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -98,7 +100,13 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ),
             SizedBox(height: 20),
-            CustomElevetedButtonDark(press: () {}, name: "Login"),
+            CustomElevetedButtonDark(press: () {
+              if (_formKey.currentState!.validate()) {
+                SignInController.instance.loginUser(
+                    controller.email.text.trim(),
+                    controller.password.text.trim());
+              }
+            }, name: "Login"),
             SizedBox(
               height: 20,
             ),

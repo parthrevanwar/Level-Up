@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mark_it/src/repository/authentication_repository/authenitication_repo.dart';
 
 class SocialLogin extends StatelessWidget {
   const SocialLogin({super.key});
@@ -25,17 +26,22 @@ class SocialLogin extends StatelessWidget {
         ),
         SizedBox(width: 10),
         Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              border: Border.all(
-                color: Color(0xFFE8ECF4),
+          child: GestureDetector(
+            onTap: (){
+              AuthenticationRepository.instance.signInWithGoogle();
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(
+                  color: Color(0xFFE8ECF4),
+                ),
               ),
-            ),
-            height: 60,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Image.network('https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png'),
+              height: 60,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.network('https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png'),
+              ),
             ),
           ),
         ),
