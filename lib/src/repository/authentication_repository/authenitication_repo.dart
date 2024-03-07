@@ -1,10 +1,9 @@
 import 'dart:ffi';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-// import 'package:google_sign_in/google_sign_in.dart';
-import 'package:mark_it/src/features/authentication/controllers/mail_verification_controller.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mark_it/src/features/authentication/screens/signin_screen.dart';
 import 'package:mark_it/src/repository/authentication_repository/exceptions/signup_email_password_failure.dart';
 import '../../features/HomePage/homescreen.dart';
@@ -41,19 +40,17 @@ class AuthenticationRepository extends GetxController {
       try {
         await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
-        firebaseUser.value != null
-            ? Get.offAll(() => const SignInScreen()) : Get.offAll(() => HomeScreen());
         userRepo.createUser(user);
 
       } on FirebaseAuthException catch (e) {
         final ex = MyExceptions.fromCode(e.code);
-        // Fluttertoast.showToast(msg: ex.message);
-        Get.snackbar("Error", ex.message);
+        Fluttertoast.showToast(msg: ex.message);
+        // Get.snackbar("Error", ex.message);
         throw ex;
       } catch (_) {
         const ex = MyExceptions();
-        // Fluttertoast.showToast(msg: ex.message);
-        Get.snackbar("Error", ex.message);
+        Fluttertoast.showToast(msg: ex.message);
+        // Get.snackbar("Error", ex.message);
         throw ex;
       }
     } else {
@@ -67,14 +64,13 @@ class AuthenticationRepository extends GetxController {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       final ex = MyExceptions.fromCode(e.code);
-      // Fluttertoast.showToast(msg: ex.message);
-      Get.snackbar("Error", ex.message);
-      print('FIREBASE AUTH EXCEPTION-${ex.message}');
+      Fluttertoast.showToast(msg: ex.message);
+      // Get.snackbar("Error", ex.message);
       throw ex;
     } catch (_) {
       const ex = MyExceptions();
-      // Fluttertoast.showToast(msg: ex.message);
-      Get.snackbar("Error", ex.message);
+      Fluttertoast.showToast(msg: ex.message);
+      // Get.snackbar("Error", ex.message);
       throw ex;
     }
   }
@@ -84,37 +80,39 @@ class AuthenticationRepository extends GetxController {
       _auth.currentUser?.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
       final ex = MyExceptions.fromCode(e.code);
-      // Fluttertoast.showToast(msg: ex.message);
+      Fluttertoast.showToast(msg: ex.message);
       // Get.snackbar("Error", ex.message);
       throw ex;
     } catch (_) {
       const ex = MyExceptions();
-      // Fluttertoast.showToast(msg: ex.message);
+      Fluttertoast.showToast(msg: ex.message);
       // Get.snackbar("Error", ex.message);
       throw ex;
     }
   }
 
-  // Future<UserCredential> signInWithGoogle() async {
-  //   try {
-  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  //     final GoogleSignInAuthentication? googleAuth =
-  //         await googleUser?.authentication;
-  //     final credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth?.accessToken,
-  //       idToken: googleAuth?.idToken,
-  //     );
-  //     return await FirebaseAuth.instance.signInWithCredential(credential);
-  //   } on FirebaseAuthException catch (e) {
-  //     final ex = MyExceptions.fromCode(e.code);
-  //     Get.snackbar("Error345", ex.message);
-  //     throw ex;
-  //   } catch (_) {
-  //     const ex = MyExceptions();
-  //     Get.snackbar("Error", ex.message);
-  //     throw ex;
-  //   }
-  // }
+  Future<void> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      final ex = MyExceptions.fromCode(e.code);
+      Fluttertoast.showToast(msg: ex.message);
+      // Get.snackbar("Error345", ex.message);
+      throw ex;
+    } catch (_) {
+      const ex = MyExceptions();
+      Fluttertoast.showToast(msg: ex.message);
+      // Get.snackbar("Error", ex.message);
+      throw ex;
+    }
+  }
 
   Future<void> logout() async => await _auth.signOut();
 }

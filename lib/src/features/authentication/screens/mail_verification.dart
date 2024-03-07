@@ -39,7 +39,7 @@ class MailVerification extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "We have just send email verification link on your email.click on the link to verify",
+              "We have just send email verification link on your email .click on the link to verify",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: AppTheme.colors.lightgray,

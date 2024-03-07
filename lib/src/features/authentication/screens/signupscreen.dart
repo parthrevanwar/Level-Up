@@ -96,7 +96,6 @@ class SignUpScreen extends StatelessWidget {
                   if (_formKey.currentState!.validate()) {
                     final user = UserModel(
                         email: controller.email.text.trim(),
-                        password: controller.password.text.trim(),
                         username: controller.username.text.trim());
                     SignUpController.instance.createUser(
                         user,

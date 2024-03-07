@@ -21,6 +21,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final controller = Get.put(SignInController());
   final _formKey = GlobalKey<FormState>();
 
+  bool fp=false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +82,7 @@ class _SignInScreenState extends State<SignInScreen> {
             SizedBox(
               height: 10,
             ),
-            Align(
+            fp ? Align(
               alignment: Alignment.centerRight,
               child: GestureDetector(
                 onTap: () {
@@ -98,7 +100,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   textAlign: TextAlign.left,
                 ),
               ),
-            ),
+            ): Container(),
             SizedBox(height: 20),
             CustomElevetedButtonDark(press: () {
               if (_formKey.currentState!.validate()) {

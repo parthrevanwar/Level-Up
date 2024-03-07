@@ -6,12 +6,10 @@ class UserModel {
   final String? id;
   final String username;
   final String? email;
-  final String password;
 
   const UserModel({
     this.id,
     required this.email,
-    required this.password,
     required this.username,
   });
 
@@ -19,7 +17,6 @@ class UserModel {
     return {
       "UserName": username,
       "Email": email,
-      "Password": password,
     };
   }
 
@@ -29,7 +26,6 @@ class UserModel {
     return UserModel(
       id: document.id,
         email: data!["Email"],
-        password: data["Password"],
         username: data["UserName"],
     );
   }

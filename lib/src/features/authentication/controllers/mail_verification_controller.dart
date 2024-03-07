@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/repository/authentication_repository/authenitication_repo.dart';
 import 'package:mark_it/src/repository/user_repo/user_repo.dart';
@@ -24,27 +25,25 @@ class MailVerificationController extends GetxController{
     try{
       await AuthenticationRepository.instance.sendEmailVerification();
     }catch(e){
-      Get.snackbar("Oh Snap", e.toString());
+      // Get.snackbar("Oh Snap", e.toString());
+      Fluttertoast.showToast(msg: e.toString());
     }
-    
   }
 
-  // void setTimeForAutoRedirct(){
-  // _timer= Timer.periodic(Duration(seconds: 3), (timer) {
-  //   FirebaseAuth.instance.currentUser?.reload();
-  //   final user=FirebaseAuth.instance.currentUser;
-  //   if(user!.emailVerified){
-  //     timer.cancel();
-  //     AuthenticationRepository.instance.setInitialScreen(user);
-  //   }
-  // });
-  // }
+  void setTimeForAutoRedirct(){
+  _timer= Timer.periodic(Duration(seconds: 3), (timer) {
+    FirebaseAuth.instance.currentUser?.reload();
+  });
+  }
 
   void manuallyCheckEmailVerificationStatus(){
     FirebaseAuth.instance.currentUser?.reload();
     final user=FirebaseAuth.instance.currentUser;
     if(user!.emailVerified){
-      AuthenticationRepository.instance.setInitialScreen(user);
+      FirebaseAuth.instance.currentUser?.reload();
+    }
+    else{
+      Fluttertoast.showToast(msg: "Verify the email first");
     }
   }
 
