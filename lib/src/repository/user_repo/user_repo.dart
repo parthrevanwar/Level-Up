@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/features/authentication/models/user.dart';
 
@@ -16,21 +17,17 @@ class UserRepository extends GetxController {
     await _db
         .collection("Users")
         .add(user.toJson())
-        .whenComplete(() => Get.snackbar(
-              "Success",
-              "Your account has been created.",
-              snackPosition: SnackPosition.BOTTOM,
+        .whenComplete(() => Fluttertoast.showToast(
+              msg: "Your account has been created.",
               backgroundColor: Colors.green.withOpacity(0.1),
-            ))
-        .catchError((error, stackTrace) {
-      Get.snackbar(
-        "Error",
-        "Somethinf went wrong.Try again",
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent.withOpacity(0.1),
-      );
-      print(error.toString());
-    });
+            ).catchError((error, stackTrace) {
+              Get.snackbar(
+                "Error",
+                "Somethinf went wrong.Try again",
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.redAccent.withOpacity(0.1),
+              );
+            }));
   }
 
   //get specific user

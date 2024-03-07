@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/repository/authentication_repository/authenitication_repo.dart';
 import 'package:mark_it/src/repository/user_repo/user_repo.dart';
@@ -17,7 +18,8 @@ class ProfileController extends GetxController{
     if(email!=null){
       return _userRepo.getUserDetails(email);
     }else{
-      Get.snackbar("Error", "Login to continue");
+      Fluttertoast.showToast(msg: "Login to continue");
+      // Get.snackbar("Error", "Login to continue");
     }
   }
 }

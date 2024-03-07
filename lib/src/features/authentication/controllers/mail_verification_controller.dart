@@ -28,22 +28,26 @@ class MailVerificationController extends GetxController{
       // Get.snackbar("Oh Snap", e.toString());
       Fluttertoast.showToast(msg: e.toString());
     }
+
   }
 
-  void setTimeForAutoRedirct(){
-  _timer= Timer.periodic(Duration(seconds: 3), (timer) {
-    FirebaseAuth.instance.currentUser?.reload();
-  });
-  }
+  // void setTimeForAutoRedirct(){
+  // _timer= Timer.periodic(Duration(seconds: 1), (timer) {
+  //   FirebaseAuth.instance.currentUser?.reload();
+  //   final user=FirebaseAuth.instance.currentUser;
+  //   if(user!.emailVerified){
+  //     _timer.cancel();
+  //     AuthenticationRepository.instance.setInitialScreen(user);
+  //   }
+  // });
+  // }
 
   void manuallyCheckEmailVerificationStatus(){
     FirebaseAuth.instance.currentUser?.reload();
     final user=FirebaseAuth.instance.currentUser;
     if(user!.emailVerified){
       FirebaseAuth.instance.currentUser?.reload();
-    }
-    else{
-      Fluttertoast.showToast(msg: "Verify the email first");
+      final user=FirebaseAuth.instance.currentUser;
     }
   }
 

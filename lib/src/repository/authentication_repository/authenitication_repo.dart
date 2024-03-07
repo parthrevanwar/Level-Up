@@ -54,7 +54,7 @@ class AuthenticationRepository extends GetxController {
         throw ex;
       }
     } else {
-      Get.snackbar("Error", "password did't match, please try again");
+      Fluttertoast.showToast(msg: "password did't match, please try again");
     }
   }
 
@@ -91,7 +91,7 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  Future<void> signInWithGoogle() async {
+  Future<UserCredential> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -100,7 +100,7 @@ class AuthenticationRepository extends GetxController {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      return await FirebaseAuth.instance.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       final ex = MyExceptions.fromCode(e.code);
       Fluttertoast.showToast(msg: ex.message);
