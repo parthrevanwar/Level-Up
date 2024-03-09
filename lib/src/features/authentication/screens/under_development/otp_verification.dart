@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:mark_it/src/features/authentication/screens/create_new_password_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/under_development/create_new_password_screen.dart';
 
-import '../../common widgets/custom_eleveted_button.dart';
-import '../../utils/theme/theme.dart';
+import '../../../../common_widgets/custom_eleveted_button.dart';
+import '../../../utils/theme/theme.dart';
 
 class OtpScreen extends StatelessWidget {
   const OtpScreen({super.key});

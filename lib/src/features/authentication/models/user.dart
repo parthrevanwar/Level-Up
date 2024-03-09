@@ -6,17 +6,20 @@ class UserModel {
   final String? id;
   final String username;
   final String? email;
+  final String? semester;
 
   const UserModel({
     this.id,
     required this.email,
     required this.username,
+    required this.semester,
   });
 
   toJson() {
     return {
       "UserName": username,
       "Email": email,
+      "Semester": semester,
     };
   }
 
@@ -25,8 +28,9 @@ class UserModel {
     final data = document.data();
     return UserModel(
       id: document.id,
-        email: data!["Email"],
-        username: data["UserName"],
+      email: data!["Email"],
+      username: data["UserName"],
+      semester: data["Semester"],
     );
   }
 }

@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:mark_it/src/features/authentication/models/user.dart';
-import 'package:mark_it/src/features/authentication/screens/otp_verification.dart';
-import 'package:mark_it/src/features/authentication/screens/signin_screen.dart';
-import 'package:mark_it/src/features/authentication/screens/social_login_buttons.dart';
+import 'package:mark_it/src/features/authentication/controllers/signup_controller.dart';
+import 'package:mark_it/src/features/authentication/screens/under_development/forgot_password_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/working_screens/signupscreen.dart';
+import 'package:mark_it/src/features/authentication/screens/working_screens/social_login_buttons.dart';
+import 'package:mark_it/src/common_widgets/custom_eleveted_button.dart';
+import 'package:mark_it/src/common_widgets/custom_text_field.dart';
+import 'package:mark_it/src/features/utils/theme/theme.dart';
 
-import '../../common widgets/custom_eleveted_button.dart';
-import '../../common widgets/custom_text_field.dart';
-import '../../utils/theme/theme.dart';
-import '../controllers/signup_controller.dart';
+import '../../controllers/signin_controller.dart';
 
-class SignUpScreen extends StatelessWidget {
-  SignUpScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
-  final controller = Get.put(SignUpController());
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final controller = Get.put(SignInController());
   final _formKey = GlobalKey<FormState>();
+
+  bool fp=false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +55,7 @@ class SignUpScreen extends StatelessWidget {
               height: 20,
             ),
             Text(
-              "Hello! Register to get\nstarted",
+              "Welcome back! Glad\nto see you again!",
               style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(
@@ -60,15 +66,8 @@ class SignUpScreen extends StatelessWidget {
               child: Column(
                 children: [
                   CustomTextField(
-                      textcontroller: controller.username,
-                      hinttext: "Enter a username",
-                      labeltext: "Username"),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomTextField(
                       textcontroller: controller.email,
-                      hinttext: "Enter an email",
+                      hinttext: "Enter your email",
                       labeltext: "Email"),
                   SizedBox(
                     height: 10,
@@ -77,42 +76,46 @@ class SignUpScreen extends StatelessWidget {
                       textcontroller: controller.password,
                       hinttext: "Enter your password",
                       labeltext: "Password"),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomTextField(
-                      textcontroller: controller.confirmpassword,
-                      hinttext: "Confirm your password",
-                      labeltext: "Confirm Password"),
-                  SizedBox(
-                    height: 10,
-                  ),
                 ],
               ),
             ),
-            SizedBox(height: 30),
-            CustomElevetedButtonDark(
-                press: () {
-                  if (_formKey.currentState!.validate()) {
-                    final user = UserModel(
-                        email: controller.email.text.trim(),
-                        username: controller.username.text.trim());
-                    SignUpController.instance.createUser(
-                        user,
-                        controller.email.text.trim(),
-                        controller.password.text.trim(),
-                      controller.confirmpassword.text.trim(),
-                    );
-                  }
+            SizedBox(
+              height: 10,
+            ),
+            fp ? Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              ForgotPasswordScreen()));
                 },
-                name: "Sign up"),
+                child: Text(
+                  "Forgot Password?",
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: AppTheme.colors.lightgray,
+                      ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ): Container(),
+            SizedBox(height: 20),
+            CustomElevetedButtonDark(press: () {
+              if (_formKey.currentState!.validate()) {
+                SignInController.instance.loginUser(
+                    controller.email.text.trim(),
+                    controller.password.text.trim());
+              }
+            }, name: "Login"),
             SizedBox(
               height: 20,
             ),
             Row(children: <Widget>[
               Expanded(child: Divider()),
               Text(
-                "    Or Register with    ",
+                "    Or Login with    ",
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: AppTheme.colors.lightgray,
                     ),
@@ -128,7 +131,7 @@ class SignUpScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Already have an account? ",
+                  "Don’t have an account? ",
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: AppTheme.colors.black,
                       ),
@@ -138,10 +141,10 @@ class SignUpScreen extends StatelessWidget {
                     Navigator.pushReplacement(
                         context,
                         new MaterialPageRoute(
-                            builder: (BuildContext context) => SignInScreen()));
+                            builder: (BuildContext context) => SignUpScreen()));
                   },
                   child: Text(
-                    "Login Now",
+                    "Register Now",
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: AppTheme.colors.Primary,
                         ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../utils/theme/theme.dart';
+import '../features/utils/theme/theme.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key, required this.textcontroller,  required this.hinttext, required this.labeltext});
+class MultilineCustomTextField extends StatelessWidget {
+  const MultilineCustomTextField({super.key, required this.textcontroller,  required this.hinttext, required this.labeltext});
   final TextEditingController textcontroller;
   final String hinttext;
   final String labeltext;
@@ -10,9 +10,10 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
       child: TextField(
         controller: textcontroller,
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
         decoration: InputDecoration(
           filled: true,
           fillColor: AppTheme.colors.verylightblue,

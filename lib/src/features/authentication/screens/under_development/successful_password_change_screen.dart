@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mark_it/src/features/authentication/screens/signin_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/working_screens/signin_screen.dart';
 
-import '../../common widgets/custom_eleveted_button.dart';
-import '../../utils/theme/theme.dart';
+import '../../../../common_widgets/custom_eleveted_button.dart';
+import '../../../utils/theme/theme.dart';
 import 'create_new_password_screen.dart';
 
 class PasswordSuccessfulScreen extends StatelessWidget {

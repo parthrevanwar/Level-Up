@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/theme/theme.dart';
+import '../features/utils/theme/theme.dart';
 
 class CustomElevetedButtonDark extends StatelessWidget {
   const CustomElevetedButtonDark({super.key, required this.press, required this.name});

@@ -43,6 +43,9 @@ dependencies:
   get: ^4.6.6
   fluttertoast: ^8.2.4
   google_sign_in: ^6.2.1
+  easy_pdf_viewer: ^1.0.7
+  firebase_storage: ^11.6.8
+  file_picker: ^6.2.0
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +71,7 @@ flutter:
    - assets/icons/facebook.svg
    - assets/images/google.png
    - assets/icons/google.svg
+   - assets/icons/book.svg
    - assets/images/mailverification.png
    - assets/images/facebook.png
    - assets/images/greentick.svg

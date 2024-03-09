@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/features/authentication/controllers/mail_verification_controller.dart';
-import 'package:mark_it/src/features/authentication/screens/signin_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/working_screens/signin_screen.dart';
 import 'package:mark_it/src/repository/authentication_repository/authenitication_repo.dart';
 
-import '../../common widgets/custom_eleveted_button.dart';
-import '../../utils/theme/theme.dart';
-import 'create_new_password_screen.dart';
+import '../../../../common_widgets/custom_eleveted_button.dart';
+import '../../../utils/theme/theme.dart';
+import '../under_development/create_new_password_screen.dart';
 
 class MailVerification extends StatelessWidget {
   MailVerification({super.key});

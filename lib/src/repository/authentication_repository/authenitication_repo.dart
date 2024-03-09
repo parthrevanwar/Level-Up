@@ -4,10 +4,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:mark_it/src/features/authentication/screens/signin_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/working_screens/signin_screen.dart';
 import 'package:mark_it/src/repository/authentication_repository/exceptions/signup_email_password_failure.dart';
-import '../../features/HomePage/homescreen.dart';
-import '../../features/authentication/screens/mail_verification.dart';
+import '../../features/HomePage/screens/menu_drawer/menu_drawer.dart';
+import '../../features/HomePage/screens/semseter_screen/base_home_page.dart';
+import '../../features/authentication/screens/working_screens/mail_verification.dart';
 import '../user_repo/user_repo.dart';
 import 'exceptions/myexceptions.dart';
 
@@ -30,7 +31,7 @@ class AuthenticationRepository extends GetxController {
     user == null
         ? Get.offAll(() => const SignInScreen())
         : user.emailVerified
-            ? Get.offAll(() => HomeScreen())
+            ? Get.offAll(() => HomeActivity())
             : Get.offAll(() => MailVerification());
   }
 

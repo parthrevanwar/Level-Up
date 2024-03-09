@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mark_it/src/features/authentication/controllers/signup_controller.dart';
-import 'package:mark_it/src/features/authentication/screens/forgot_password_screen.dart';
-import 'package:mark_it/src/features/authentication/screens/signupscreen.dart';
-import 'package:mark_it/src/features/authentication/screens/social_login_buttons.dart';
-import 'package:mark_it/src/features/common%20widgets/custom_eleveted_button.dart';
-import 'package:mark_it/src/features/common%20widgets/custom_text_field.dart';
-import 'package:mark_it/src/features/utils/theme/theme.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:mark_it/src/features/authentication/models/user.dart';
+import 'package:mark_it/src/features/authentication/screens/under_development/otp_verification.dart';
+import 'package:mark_it/src/features/authentication/screens/working_screens/signin_screen.dart';
+import 'package:mark_it/src/features/authentication/screens/working_screens/social_login_buttons.dart';
 
-import '../controllers/signin_controller.dart';
+import '../../../../common_widgets/custom_eleveted_button.dart';
+import '../../../../common_widgets/custom_text_field.dart';
+import '../../../utils/theme/theme.dart';
+import '../../controllers/signup_controller.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({super.key});
 
-  @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
-  final controller = Get.put(SignInController());
+  final controller = Get.put(SignUpController());
   final _formKey = GlobalKey<FormState>();
-
-  bool fp=false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
               height: 20,
             ),
             Text(
-              "Welcome back! Glad\nto see you again!",
+              "Hello! Register to get\nstarted",
               style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(
@@ -66,8 +60,15 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 children: [
                   CustomTextField(
+                      textcontroller: controller.username,
+                      hinttext: "Enter a username",
+                      labeltext: "Username"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextField(
                       textcontroller: controller.email,
-                      hinttext: "Enter your email",
+                      hinttext: "Enter an email",
                       labeltext: "Email"),
                   SizedBox(
                     height: 10,
@@ -76,46 +77,43 @@ class _SignInScreenState extends State<SignInScreen> {
                       textcontroller: controller.password,
                       hinttext: "Enter your password",
                       labeltext: "Password"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextField(
+                      textcontroller: controller.confirmpassword,
+                      hinttext: "Confirm your password",
+                      labeltext: "Confirm Password"),
+                  SizedBox(
+                    height: 10,
+                  ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            fp ? Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              ForgotPasswordScreen()));
+            SizedBox(height: 30),
+            CustomElevetedButtonDark(
+                press: () {
+                  if (_formKey.currentState!.validate()) {
+                    final user = UserModel(
+                        email: controller.email.text.trim(),
+                        username: controller.username.text.trim(),
+                        semester: "4");
+                    SignUpController.instance.createUser(
+                      user,
+                      controller.email.text.trim(),
+                      controller.password.text.trim(),
+                      controller.confirmpassword.text.trim(),
+                    );
+                  }
                 },
-                child: Text(
-                  "Forgot Password?",
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppTheme.colors.lightgray,
-                      ),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-            ): Container(),
-            SizedBox(height: 20),
-            CustomElevetedButtonDark(press: () {
-              if (_formKey.currentState!.validate()) {
-                SignInController.instance.loginUser(
-                    controller.email.text.trim(),
-                    controller.password.text.trim());
-              }
-            }, name: "Login"),
+                name: "Sign up"),
             SizedBox(
               height: 20,
             ),
             Row(children: <Widget>[
               Expanded(child: Divider()),
               Text(
-                "    Or Login with    ",
+                "    Or Register with    ",
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: AppTheme.colors.lightgray,
                     ),
@@ -131,7 +129,7 @@ class _SignInScreenState extends State<SignInScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Don’t have an account? ",
+                  "Already have an account? ",
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: AppTheme.colors.black,
                       ),
@@ -141,10 +139,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     Navigator.pushReplacement(
                         context,
                         new MaterialPageRoute(
-                            builder: (BuildContext context) => SignUpScreen()));
+                            builder: (BuildContext context) => SignInScreen()));
                   },
                   child: Text(
-                    "Register Now",
+                    "Login Now",
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: AppTheme.colors.Primary,
                         ),
