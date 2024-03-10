@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '../../../../utils/theme/theme.dart';
+import '../../../models/subject_model.dart';
 
 class LinksScreen extends StatelessWidget {
   const LinksScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {

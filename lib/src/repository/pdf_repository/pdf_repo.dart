@@ -5,48 +5,63 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:mark_it/src/features/HomePage/models/subject_model.dart';
+import '../../features/HomePage/controllers/semseter_controller.dart';
+import '../../features/HomePage/controllers/subject_controller.dart';
 
 class PdfRepository extends GetxController {
   static PdfRepository get instance => Get.find();
 
-  final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-  final _firebasefirestire = FirebaseFirestore.instance;
+  final semestercontroller = Get.put(SemesterController());
+  final subjectcontroller = Get.put(SubjectController());
 
-  Future<String?> uploadFile(String fileName, File file) async {
-    try{
-      final refrence =
-      firebaseStorage.ref().child("StudyMaterial/$fileName.pdf");
+  final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+  final _firebasefirestore = FirebaseFirestore.instance;
+
+  Future<String?> uploadFile(String fileName, File file, String subjectname,
+      String type) async {
+    try {
+      final refrence = firebaseStorage.ref().child(
+          "StudyMaterial/semseter_${semestercontroller
+              .semester}/${subjectname}/$type/$fileName.pdf");
       final uplodetask = await refrence.putFile(file);
       final downlodelink = await refrence.getDownloadURL();
       return downlodelink;
-    }catch (e){
+    } catch (e) {
       Fluttertoast.showToast(msg: e.toString());
     }
     return null;
   }
 
-  Future<void> pickFile() async {
+  Future<void> pickFile(String type) async {
     final pickedFile = await FilePicker.platform.pickFiles(
         allowMultiple: false,
         type: FileType.custom,
         allowedExtensions: ['pdf']);
-    if (pickedFile != null ) {
+    if (pickedFile != null) {
       try {
-        String filename=pickedFile.files.single.name;
-        File file=File(pickedFile.files.single.path!);
+        String filename = pickedFile.files.single.name;
+        File file = File(pickedFile.files.single.path!);
         final url = await uploadFile(
-            filename,file
-        );
-        await _firebasefirestire.collection("StudyMaterial").add({
-          "Name":filename,
-          "Url":url,
+            filename, file, subjectcontroller.subject.name, type);
+        await _firebasefirestore
+            .collection("semester")
+            .doc(semestercontroller.semester)
+            .collection("Subject")
+            .doc(subjectcontroller.subject.id)
+            .collection(type)
+            .add({
+          "Name": filename,
+          "Url": url,
         });
         Fluttertoast.showToast(msg: "file upload succesful .");
-      }catch(e){
+      } catch (e) {
         Fluttertoast.showToast(msg: "error store upload data");
       }
     } else {
       Fluttertoast.showToast(msg: "No file selected .");
     }
   }
+
+
 }

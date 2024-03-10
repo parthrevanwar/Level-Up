@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:mark_it/src/common_widgets/custom_eleveted_button.dart';
 import 'package:mark_it/src/features/HomePage/controllers/semseter_controller.dart';
-
 import '../../../../common_widgets/multiline_textcontroller.dart';
 import '../../../utils/theme/theme.dart';
 import '../../controllers/subject_controller.dart';
@@ -32,22 +30,22 @@ class AddSubject extends StatelessWidget {
             children: [
               MultilineCustomTextField(
                   textcontroller: subjectcontroller.title,
-                  hinttext: "add title",
-                  labeltext: "Title"),
+                  hinttext: "add shortform",
+                  labeltext: "Shortform"),
               SizedBox(
                 height: 10,
               ),
               MultilineCustomTextField(
                   textcontroller: subjectcontroller.subtitle,
                   hinttext: "add subtitle",
-                  labeltext: "Subtitle"),
+                  labeltext: "SubjectName"),
               SizedBox(
                 height: 10,
               ),
               MultilineCustomTextField(
                   textcontroller: subjectcontroller.subjectid,
                   hinttext: "add subjectid",
-                  labeltext: "Subjectid"),
+                  labeltext: "SubjectId"),
               SizedBox(
                 height: 20,
               ),

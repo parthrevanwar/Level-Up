@@ -13,13 +13,14 @@ class ProfileController extends GetxController{
   final _authRepo= Get.put(AuthenticationRepository());
   final _userRepo= Get.put(UserRepository());
 
+
   getUserData(){
     final email=_authRepo.firebaseUser.value?.email;
     if(email!=null){
       return _userRepo.getUserDetails(email);
     }else{
       Fluttertoast.showToast(msg: "Login to continue");
-      // Get.snackbar("Error", "Login to continue");
+      Get.snackbar("Error", "Login to continue");
     }
   }
 }

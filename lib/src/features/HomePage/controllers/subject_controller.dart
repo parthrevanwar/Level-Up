@@ -3,11 +3,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:mark_it/src/features/HomePage/models/subject_model.dart';
 
 class SubjectController extends GetxController {
   static SubjectController get instance => Get.find();
 
   final _firebasefirestore = FirebaseFirestore.instance;
+
+  late SubjectModel subject ;
 
   final title = TextEditingController();
   final subtitle = TextEditingController();
@@ -25,8 +28,8 @@ class SubjectController extends GetxController {
       await _firebasefirestore.collection("semester").doc(semester)
           .collection("Subject")
           .add({
-        "Title": title,
-        "SubTitle": subtitle,
+        "ShortForm": title,
+        "Name": subtitle,
         "SubjectId": subjectid,
       });
       Fluttertoast.showToast(msg: "Subject added.");

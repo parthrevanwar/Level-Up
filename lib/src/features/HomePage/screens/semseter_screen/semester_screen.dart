@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/features/HomePage/controllers/semseter_controller.dart';
 import 'package:mark_it/src/features/HomePage/controllers/subject_controller.dart';
+import 'package:mark_it/src/features/HomePage/models/subject_model.dart';
 import 'package:mark_it/src/features/HomePage/screens/menu_drawer/menu_drawer.dart';
 import 'package:mark_it/src/features/HomePage/screens/semseter_screen/add_subject.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subject.dart';
@@ -11,19 +12,17 @@ import 'package:mark_it/src/features/utils/theme/theme.dart';
 import '../../../../repository/pdf_repository/pdf_repo.dart';
 import 'components/subject_card.dart';
 
-class HomeActivity extends StatefulWidget {
-  HomeActivity({super.key});
+class SemesterScreen extends StatefulWidget {
+  SemesterScreen({super.key});
 
   @override
-  State<HomeActivity> createState() => _HomeActivityState();
+  State<SemesterScreen> createState() => _SemesterScreenState();
 }
 
-class _HomeActivityState extends State<HomeActivity> {
+class _SemesterScreenState extends State<SemesterScreen> {
   final pdfcontroller = Get.put(PdfRepository());
   final semestercontroller = Get.put(SemesterController());
   final subjectcontroller = Get.put(SubjectController());
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -90,16 +89,17 @@ class _HomeActivityState extends State<HomeActivity> {
                   itemCount: docs.length,
                   itemBuilder: (context, index) {
                     return SubjectCard(
-                      title: docs[index]["Title"],
-                      subtitle: docs[index]["SubTitle"],
+                      title: docs[index]["ShortForm"],
+                      subtitle: docs[index]["Name"],
                       press: () {
+                        subjectcontroller.subject =
+                            SubjectModel.fromSnapshot(docs[index]);
                         Navigator.push(
                             context,
-                            new MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    SubjectScreen(
-                                      subjectname: docs[index]["Title"],
-                                    )));
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  SubjectScreen(),
+                            ));
                       },
                     );
                   },
@@ -117,8 +117,7 @@ class _HomeActivityState extends State<HomeActivity> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      AddSubject()));
+                  builder: (BuildContext context) => AddSubject()));
         },
       ),
     );
