@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:mark_it/src/features/utils/theme/theme.dart';
 
+import '../../controllers/admincontroller.dart';
+
 class SubjectCard extends StatelessWidget {
-  SubjectCard({super.key, required this.title, required this.subtitle, required this.press});
+  SubjectCard({super.key, required this.title, required this.subtitle, required this.press, required this.delet});
 
   final title;
   final subtitle;
 
   final VoidCallback press;
+  final VoidCallback delet;
+
+  final admincontroller = Get.put(AdminController());
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +61,7 @@ class SubjectCard extends StatelessWidget {
                   Icons.keyboard_arrow_right,
                   size: 40,
                 ),
+                admincontroller.admin! ==true ?IconButton(onPressed: delet, icon: Icon(Icons.delete,color: Colors.red,)):Container(),
               ],
             ),
             Divider(thickness: 2,color: AppTheme.colors.border,),

@@ -1,10 +1,10 @@
-import 'dart:html';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/features/HomePage/controllers/branchcontroller.dart';
+import 'package:mark_it/src/features/HomePage/screens/admin_console/admin_console.dart';
+import 'package:mark_it/src/features/HomePage/screens/announcment_screen/announcement_screen.dart';
 import 'package:mark_it/src/features/HomePage/screens/semseter_screen/semester_screen.dart';
 import 'package:mark_it/src/features/authentication/controllers/profile_controller.dart';
 import 'package:mark_it/src/common_widgets/custom_eleveted_button.dart';
@@ -81,6 +81,39 @@ class _MenuDrawerState extends State<MenuDrawer> {
               ),
             ),
             Divider(color: AppTheme.colors.lightgray,),
+            ListTile(
+              title: const Text('Home'),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          SemesterScreen(),
+                    ));
+              },
+            ),
+            ListTile(
+              title: const Text('Announcements'),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          AnnouncementScreen(),
+                    ));
+              },
+            ),
+            ListTile(
+              title: const Text('Admin console'),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                    AdminConsole(),
+                    ));
+              },
+            ),
             Spacer(),
             CustomElevetedButtonDark(
                 press: () {

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/features/HomePage/controllers/semseter_controller.dart';
@@ -20,8 +21,10 @@ class PYQController extends GetxController {
   final _firebasefirestore = FirebaseFirestore.instance;
   final branchcontroller = Get.put(BranchController());
 
-  void addpyq (){
-    pdfrepo.pickFile( "PYQ");
+  final pdftitle = TextEditingController();
+
+  void addpyq (String title){
+    pdfrepo.pickFile( "PYQ",title);
   }
 
 

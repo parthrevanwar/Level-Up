@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -27,12 +26,14 @@ class SubjectController extends GetxController {
   Future<void> addsubject(String title,String subtitle,String subjectid,
       String semester) async {
     try {
+      String reference="StudyMaterial/semseter_$semester/${branchcontroller.branch}/$subtitle";
       await _firebasefirestore.collection("semester").doc(semester)
           .collection(branchcontroller.branch)
           .add({
         "ShortForm": title,
         "Name": subtitle,
         "SubjectId": subjectid,
+        "Reference": reference,
       });
       Fluttertoast.showToast(msg: "Subject added.");
     } catch (e) {

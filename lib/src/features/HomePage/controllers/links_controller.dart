@@ -21,7 +21,6 @@ class LinkController extends GetxController {
 
   void clearText() {
     title.clear();
-    title.clear();
     link.clear();
   }
 

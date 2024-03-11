@@ -7,6 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../../repository/pdf_repository/pdf_repo.dart';
 import '../../../controllers/Material_controller.dart';
+import '../../../controllers/admincontroller.dart';
 import '../../../controllers/branchcontroller.dart';
 import '../../../controllers/links_controller.dart';
 import '../../../controllers/semseter_controller.dart';
@@ -27,6 +28,7 @@ class _LinksScreenState extends State<LinksScreen> {
   final subjectcontroller = Get.put(SubjectController());
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   final branchcontroller = Get.put(BranchController());
+  final admincontroller = Get.put(AdminController());
 
   Future<void>? _launched;
 
@@ -92,11 +94,32 @@ class _LinksScreenState extends State<LinksScreen> {
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 18),
                       ),
-                      trailing: IconButton(
-                        icon: Icon(Icons.link),
+                      trailing:
+                      admincontroller.admin! ==true ?
+                      IconButton(
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                        onPressed: () async {
+                          try{
+                            await FirebaseFirestore.instance
+                                .collection("semester")
+                                .doc(semestercontroller.semester)
+                                .collection(branchcontroller.branch)
+                                .doc(subjectcontroller.subject.id)
+                                .collection("Links").doc(docs[index].id).delete();
+                            Fluttertoast.showToast(msg: "Link deleted successfully");
+                          }catch (e){
+                            Fluttertoast.showToast(msg: e.toString());
+                          }
+                        },
+                      ):
+                      IconButton(
+                        icon: const Icon(Icons.link),
                         onPressed: () {
-                          final Uri uri =
-                              Uri(scheme: "https", host: docs[index]["Link"]);
+                          final Uri uri = Uri(
+                              scheme: "https", host: docs[index]["Link"]);
                           setState(() {
                             _launched = _launchInBrowser(uri);
                           });

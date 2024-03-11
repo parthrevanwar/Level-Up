@@ -1,11 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:mark_it/src/features/HomePage/models/subject_model.dart';
 import '../../features/HomePage/controllers/branchcontroller.dart';
 import '../../features/HomePage/controllers/semseter_controller.dart';
 import '../../features/HomePage/controllers/subject_controller.dart';
@@ -16,7 +14,6 @@ class PdfRepository extends GetxController {
   final semestercontroller = Get.put(SemesterController());
   final subjectcontroller = Get.put(SubjectController());
   final branchcontroller = Get.put(BranchController());
-
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   final _firebasefirestore = FirebaseFirestore.instance;
 
@@ -24,7 +21,7 @@ class PdfRepository extends GetxController {
       String fileName, File file, String subjectname, String type) async {
     try {
       final refrence = firebaseStorage.ref().child(
-          "StudyMaterial/semseter_${semestercontroller.semester}/${branchcontroller.branch}/$subjectname/$type/$fileName.pdf");
+          "StudyMaterial/semseter_${semestercontroller.semester}/${branchcontroller.branch}/$subjectname/$type/$fileName");
       final uplodetask = await refrence.putFile(file);
       final downlodelink = await refrence.getDownloadURL();
       return downlodelink;
@@ -34,7 +31,7 @@ class PdfRepository extends GetxController {
     return null;
   }
 
-  Future<void> pickFile(String type) async {
+  Future<void> pickFile(String type,String title) async {
     final pickedFile = await FilePicker.platform.pickFiles(
         allowMultiple: false,
         type: FileType.custom,
@@ -52,7 +49,8 @@ class PdfRepository extends GetxController {
             .doc(subjectcontroller.subject.id)
             .collection(type)
             .add({
-          "Name": filename,
+          "Name": title,
+          "Reference":"StudyMaterial/semseter_${semestercontroller.semester}/${branchcontroller.branch}/${subjectcontroller.subject.name}/$type/$filename",
           "Url": url,
         });
         Fluttertoast.showToast(msg: "file upload succesful .");

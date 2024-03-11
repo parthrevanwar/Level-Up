@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/features/HomePage/controllers/links_controller.dart';
-import 'package:mark_it/src/features/HomePage/screens/subjectscreens/add_link.dart';
+import 'package:mark_it/src/features/HomePage/screens/subjectscreens/add_data/add_link.dart';
+import 'package:mark_it/src/features/HomePage/screens/subjectscreens/add_data/add_material.dart';
+import 'package:mark_it/src/features/HomePage/screens/subjectscreens/add_data/add_pyq.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subscreens/links.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subscreens/material.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subscreens/pyq.dart';
 import '../../controllers/Material_controller.dart';
+import '../../controllers/admincontroller.dart';
 import '../../controllers/pyq_controller.dart';
 import '../../controllers/subject_controller.dart';
 
@@ -23,6 +26,7 @@ class _SubjectScreenState extends State<SubjectScreen>
   final materialcontroller = Get.put(MaterialController());
   final pyqcontroller = Get.put(PYQController());
   final linkcontroller = Get.put(LinkController());
+  final admincontroller = Get.put(AdminController());
 
   late TabController _tabController;
 
@@ -87,28 +91,41 @@ class _SubjectScreenState extends State<SubjectScreen>
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(
-          Icons.add,
+      floatingActionButton: Visibility(
+        visible: admincontroller.admin == true ,
+        child: FloatingActionButton(
+          child: const Icon(
+            Icons.add,
+          ),
+          onPressed: () {
+            switch(_tabController.index){
+              case 0:
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          AddMaterial(),
+                    ));
+                break;
+              case 1:
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          AddLink(),
+                    ));
+                break;
+              case 2:
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          AddPYQ(),
+                    ));
+                break;
+            }
+          },
         ),
-        onPressed: () {
-          switch(_tabController.index){
-            case 0:
-              materialcontroller.addmaterial();
-              break;
-            case 1:
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        AddLink(),
-                  ));
-              break;
-            case 2:
-              pyqcontroller.addpyq();
-              break;
-          }
-        },
       ),
     );
   }

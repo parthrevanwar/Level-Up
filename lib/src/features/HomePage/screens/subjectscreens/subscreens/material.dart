@@ -77,6 +77,24 @@ class _MaterialScreenState extends State<MaterialScreen> {
                         ),
                       ));
                 },
+                delet: () async {
+                  final delrefrence = firebaseStorage.ref().child(docs[index]["Reference"]);
+                  try{
+                    await delrefrence.delete();
+                    await FirebaseFirestore.instance
+                        .collection("semester")
+                        .doc(semestercontroller.semester)
+                        .collection(branchcontroller.branch)
+                        .doc(subjectcontroller.subject.id)
+                        .collection("Material").doc(docs[index].id).delete();
+                    Fluttertoast.showToast(msg: "file deleted successfully");
+
+                  }catch (e){
+                    Fluttertoast.showToast(msg: e.toString());
+                  }
+
+
+                },
               );
             },
           );

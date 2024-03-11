@@ -22,8 +22,6 @@ class PYQScreen extends StatefulWidget {
 }
 
 class _PYQScreenState extends State<PYQScreen> {
-
-
   final pyqcontroller = Get.put(PYQController());
   final materialcontroller = Get.put(MaterialController());
   final pdfrepo = Get.put(PdfRepository());
@@ -37,7 +35,6 @@ class _PYQScreenState extends State<PYQScreen> {
     pyqcontroller.getpdf();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +78,24 @@ class _PYQScreenState extends State<PYQScreen> {
                           title: docs[index]["Name"],
                         ),
                       ));
+                },
+                delet: () async {
+                  final delrefrence =
+                      firebaseStorage.ref().child(docs[index]["Reference"]);
+                  try {
+                    await delrefrence.delete();
+                    await FirebaseFirestore.instance
+                        .collection("semester")
+                        .doc(semestercontroller.semester)
+                        .collection(branchcontroller.branch)
+                        .doc(subjectcontroller.subject.id)
+                        .collection("PYQ")
+                        .doc(docs[index].id)
+                        .delete();
+                    Fluttertoast.showToast(msg: "file deleted successfully");
+                  } catch (e) {
+                    Fluttertoast.showToast(msg: e.toString());
+                  }
                 },
               );
             },

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -11,8 +12,9 @@ import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subject.dar
 import 'package:mark_it/src/features/utils/theme/theme.dart';
 import '../../../../repository/pdf_repository/pdf_repo.dart';
 import '../../controllers/Material_controller.dart';
+import '../../controllers/admincontroller.dart';
 import '../../controllers/branchcontroller.dart';
-import 'components/subject_card.dart';
+import 'subject_card.dart';
 
 class SemesterScreen extends StatefulWidget {
   SemesterScreen({super.key});
@@ -24,15 +26,18 @@ class SemesterScreen extends StatefulWidget {
 class _SemesterScreenState extends State<SemesterScreen> {
 
   final pdfcontroller = Get.put(PdfRepository());
-  final semestercontroller = Get.put(SemesterController());
-  final subjectcontroller = Get.put(SubjectController());
+  final admincontroller = Get.put(AdminController());
   final branchcontroller = Get.put(BranchController());
+  final subjectcontroller = Get.put(SubjectController());
+  final semestercontroller = Get.put(SemesterController());
   final materialcontroller = Get.put(MaterialController());
+  final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
   int counter = 0;
 
   void refresh(int childValue) {
     setState(() {
+      admincontroller.isadmin();
       counter = childValue;
     });
   }
@@ -118,6 +123,22 @@ class _SemesterScreenState extends State<SemesterScreen> {
                                   SubjectScreen(),
                             ));
                       },
+                      delet: () async {
+                        final delrefrence = firebaseStorage.ref().child(docs[index]["Reference"]);
+                        Fluttertoast.showToast(msg: docs[index]["Reference"]);
+                        try{
+                          await delrefrence.delete();
+                          await FirebaseFirestore.instance
+                              .collection("semester")
+                              .doc(semestercontroller.semester)
+                              .collection(branchcontroller.branch)
+                              .doc(docs[index].id).delete();
+                          Fluttertoast.showToast(msg: "file deleted successfully");
+
+                        }catch (e){
+                          Fluttertoast.showToast(msg: e.toString());
+                        }
+                      },
                     );
                   },
                 );
@@ -126,16 +147,19 @@ class _SemesterScreenState extends State<SemesterScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(
-          Icons.add,
+      floatingActionButton: Visibility(
+        visible: admincontroller.admin==true,
+        child: FloatingActionButton(
+          child: const Icon(
+            Icons.add,
+          ),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => AddSubject()));
+          },
         ),
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => AddSubject()));
-        },
       ),
     );
   }

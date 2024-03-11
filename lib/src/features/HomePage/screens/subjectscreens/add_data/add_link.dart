@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/common_widgets/custom_eleveted_button.dart';
 import 'package:mark_it/src/features/HomePage/controllers/semseter_controller.dart';
-import '../../../../common_widgets/multiline_textcontroller.dart';
-import '../../../utils/theme/theme.dart';
-import '../../controllers/links_controller.dart';
-import '../../controllers/subject_controller.dart';
+import '../../../../../common_widgets/multiline_textcontroller.dart';
+import '../../../../utils/theme/theme.dart';
+import '../../../controllers/links_controller.dart';
+import '../../../controllers/subject_controller.dart';
 
 class AddLink extends StatelessWidget {
   AddLink({super.key});
@@ -45,9 +46,16 @@ class AddLink extends StatelessWidget {
               ),
               CustomElevetedButtonDark(
                   press: () {
-                    linkcontroller.addlink();
-                    linkcontroller.clearText();
-                    Navigator.of(context).pop();
+                    if(linkcontroller.title.text==""){
+                      Fluttertoast.showToast(msg: "Please enter a title");
+                    }else if(linkcontroller.link.text==""){
+                      Fluttertoast.showToast(msg: "Please enter a link");
+                    }
+                    else{
+                      linkcontroller.addlink();
+                      linkcontroller.clearText();
+                      Navigator.of(context).pop();
+                    }
                   },
                   name: "Add Link"),
             ],
