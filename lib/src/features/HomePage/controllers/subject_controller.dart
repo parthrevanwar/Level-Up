@@ -3,12 +3,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:mark_it/src/features/HomePage/controllers/branchcontroller.dart';
 import 'package:mark_it/src/features/HomePage/models/subject_model.dart';
 
 class SubjectController extends GetxController {
   static SubjectController get instance => Get.find();
 
   final _firebasefirestore = FirebaseFirestore.instance;
+  final branchcontroller = Get.put(BranchController());
 
   late SubjectModel subject ;
 
@@ -26,7 +28,7 @@ class SubjectController extends GetxController {
       String semester) async {
     try {
       await _firebasefirestore.collection("semester").doc(semester)
-          .collection("Subject")
+          .collection(branchcontroller.branch)
           .add({
         "ShortForm": title,
         "Name": subtitle,

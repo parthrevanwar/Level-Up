@@ -7,6 +7,9 @@ import 'package:mark_it/src/features/HomePage/controllers/subject_controller.dar
 import 'package:mark_it/src/features/HomePage/models/subject_model.dart';
 import 'package:mark_it/src/repository/pdf_repository/pdf_repo.dart';
 
+import '../models/pdf_model.dart';
+import 'branchcontroller.dart';
+
 class PYQController extends GetxController {
   static PYQController get instance => Get.find();
 
@@ -15,23 +18,20 @@ class PYQController extends GetxController {
   final subjectcontroller = Get.put(SubjectController());
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   final _firebasefirestore = FirebaseFirestore.instance;
+  final branchcontroller = Get.put(BranchController());
 
   void addpyq (){
     pdfrepo.pickFile( "PYQ");
   }
-  List<Map<String, dynamic>> pyqpdfdata=[];
 
-  Future<void> getpdf() async {
-    try {
-      final result = await _firebasefirestore
-          .collection("semester")
-          .doc(semestercontroller.semester)
-          .collection("Subject")
-          .doc(subjectcontroller.subject.id)
-          .collection("PYQ").get();
-      pyqpdfdata =result.docs.map((e) => e.data()).toList();
-    } catch (e) {
-      Fluttertoast.showToast(msg: "error fetching pdf");
-    }
+
+  Future<List<PdfModel>> getpdf() async {
+    final result = await _firebasefirestore
+        .collection("semester")
+        .doc(semestercontroller.semester)
+        .collection(branchcontroller.branch)
+        .doc(subjectcontroller.subject.id)
+        .collection("PYQ").get();
+    return result.docs.map((e) => PdfModel.fromSnapshot(e)).toList();
   }
 }

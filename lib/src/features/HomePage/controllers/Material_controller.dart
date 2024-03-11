@@ -4,7 +4,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/features/HomePage/controllers/semseter_controller.dart';
 import 'package:mark_it/src/features/HomePage/controllers/subject_controller.dart';
+import 'package:mark_it/src/features/HomePage/models/pdf_model.dart';
 import 'package:mark_it/src/repository/pdf_repository/pdf_repo.dart';
+
+import 'branchcontroller.dart';
 
 class MaterialController extends GetxController {
   static MaterialController get instance => Get.find();
@@ -14,23 +17,19 @@ class MaterialController extends GetxController {
   final subjectcontroller = Get.put(SubjectController());
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   final _firebasefirestore = FirebaseFirestore.instance;
+  final branchcontroller = Get.put(BranchController());
 
   void addmaterial (){
     pdfrepo.pickFile("Material");
   }
 
-  List<Map<String, dynamic>> materialpdfdata=[];
-  Future<void> getpdf() async {
-    try {
+  Future<List<PdfModel>> getpdf() async {
       final result = await _firebasefirestore
           .collection("semester")
           .doc(semestercontroller.semester)
-          .collection("Subject")
+          .collection(branchcontroller.branch)
           .doc(subjectcontroller.subject.id)
           .collection("Material").get();
-      materialpdfdata =result.docs.map((e) => e.data()).toList();
-    } catch (e) {
-      Fluttertoast.showToast(msg: "error fetching pdf");
-    }
+      return result.docs.map((e) => PdfModel.fromSnapshot(e)).toList();
   }
 }

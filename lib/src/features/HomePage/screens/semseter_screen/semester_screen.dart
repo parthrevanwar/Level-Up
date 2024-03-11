@@ -10,6 +10,8 @@ import 'package:mark_it/src/features/HomePage/screens/semseter_screen/add_subjec
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subject.dart';
 import 'package:mark_it/src/features/utils/theme/theme.dart';
 import '../../../../repository/pdf_repository/pdf_repo.dart';
+import '../../controllers/Material_controller.dart';
+import '../../controllers/branchcontroller.dart';
 import 'components/subject_card.dart';
 
 class SemesterScreen extends StatefulWidget {
@@ -20,9 +22,20 @@ class SemesterScreen extends StatefulWidget {
 }
 
 class _SemesterScreenState extends State<SemesterScreen> {
+
   final pdfcontroller = Get.put(PdfRepository());
   final semestercontroller = Get.put(SemesterController());
   final subjectcontroller = Get.put(SubjectController());
+  final branchcontroller = Get.put(BranchController());
+  final materialcontroller = Get.put(MaterialController());
+
+  int counter = 0;
+
+  void refresh(int childValue) {
+    setState(() {
+      counter = childValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +50,11 @@ class _SemesterScreenState extends State<SemesterScreen> {
         )),
       ),
       drawer: Drawer(
-        child: MenuDrawer(),
+        child: MenuDrawer(
+          notifyParent: (counter) {
+            refresh(counter);
+          },
+        ),
       ),
       body: Stack(
         children: [
@@ -71,8 +88,8 @@ class _SemesterScreenState extends State<SemesterScreen> {
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection("semester")
-                  .doc("${semestercontroller.semester}")
-                  .collection("Subject")
+                  .doc(semestercontroller.semester)
+                  .collection(branchcontroller.branch)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {

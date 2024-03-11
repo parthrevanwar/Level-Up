@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/features/HomePage/models/subject_model.dart';
+import '../../features/HomePage/controllers/branchcontroller.dart';
 import '../../features/HomePage/controllers/semseter_controller.dart';
 import '../../features/HomePage/controllers/subject_controller.dart';
 
@@ -14,16 +15,16 @@ class PdfRepository extends GetxController {
 
   final semestercontroller = Get.put(SemesterController());
   final subjectcontroller = Get.put(SubjectController());
+  final branchcontroller = Get.put(BranchController());
 
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   final _firebasefirestore = FirebaseFirestore.instance;
 
-  Future<String?> uploadFile(String fileName, File file, String subjectname,
-      String type) async {
+  Future<String?> uploadFile(
+      String fileName, File file, String subjectname, String type) async {
     try {
       final refrence = firebaseStorage.ref().child(
-          "StudyMaterial/semseter_${semestercontroller
-              .semester}/${subjectname}/$type/$fileName.pdf");
+          "StudyMaterial/semseter_${semestercontroller.semester}/${branchcontroller.branch}/$subjectname/$type/$fileName.pdf");
       final uplodetask = await refrence.putFile(file);
       final downlodelink = await refrence.getDownloadURL();
       return downlodelink;
@@ -47,7 +48,7 @@ class PdfRepository extends GetxController {
         await _firebasefirestore
             .collection("semester")
             .doc(semestercontroller.semester)
-            .collection("Subject")
+            .collection(branchcontroller.branch)
             .doc(subjectcontroller.subject.id)
             .collection(type)
             .add({
@@ -62,6 +63,4 @@ class PdfRepository extends GetxController {
       Fluttertoast.showToast(msg: "No file selected .");
     }
   }
-
-
 }

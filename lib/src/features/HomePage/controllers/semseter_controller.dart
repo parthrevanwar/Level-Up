@@ -8,7 +8,4 @@ class SemesterController extends GetxController {
   ];
 
   String semester = "1";
-
-
-
 }

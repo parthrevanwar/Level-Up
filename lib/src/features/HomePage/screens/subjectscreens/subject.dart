@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/features/HomePage/controllers/links_controller.dart';
-import 'package:mark_it/src/features/HomePage/models/subject_model.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/add_link.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subscreens/links.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subscreens/material.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subscreens/pyq.dart';
-import 'package:mark_it/src/repository/pdf_repository/pdf_repo.dart';
-
 import '../../controllers/Material_controller.dart';
 import '../../controllers/pyq_controller.dart';
 import '../../controllers/subject_controller.dart';
-// import 'package:mark_it/src/repository/subject_repository/subject_repo.dart';
 
 class SubjectScreen extends StatefulWidget {
   const SubjectScreen({super.key});
@@ -34,7 +30,10 @@ class _SubjectScreenState extends State<SubjectScreen>
   void initState() {
     _tabController = TabController(length: 3, vsync: this, initialIndex: 0)
       ..addListener(() {
-        setState(() {});
+        setState(() {
+          materialcontroller.getpdf();
+          pyqcontroller.getpdf();
+        });
       });
     super.initState();
   }
