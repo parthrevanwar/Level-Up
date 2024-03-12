@@ -11,7 +11,7 @@ class SubjectController extends GetxController {
   final _firebasefirestore = FirebaseFirestore.instance;
   final branchcontroller = Get.put(BranchController());
 
-  late SubjectModel subject ;
+  late SubjectModel subject;
 
   final title = TextEditingController();
   final subtitle = TextEditingController();
@@ -23,17 +23,20 @@ class SubjectController extends GetxController {
     subjectid.clear();
   }
 
-  Future<void> addsubject(String title,String subtitle,String subjectid,
-      String semester) async {
+  Future<void> addsubject(String title, String subtitle, String subjectid,
+      String semester,bool it,bool itbi ,bool ece) async {
     try {
-      String reference="StudyMaterial/semseter_$semester/${branchcontroller.branch}/$subtitle";
+      String reference = "StudyMaterial/semester_$semester/Subjects/$subtitle";
       await _firebasefirestore.collection("semester").doc(semester)
-          .collection(branchcontroller.branch)
+          .collection("Subjects")
           .add({
-        "ShortForm": title,
-        "Name": subtitle,
-        "SubjectId": subjectid,
-        "Reference": reference,
+      "ShortForm": title,
+      "Name": subtitle,
+      "SubjectId": subjectid,
+      "Reference": reference,
+      "IT": it ,
+      "ITBI": itbi ,
+      "ECE": ece ,
       });
       Fluttertoast.showToast(msg: "Subject added.");
     } catch (e) {

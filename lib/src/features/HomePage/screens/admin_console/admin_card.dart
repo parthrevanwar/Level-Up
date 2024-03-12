@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../../../utils/theme/theme.dart';
 import '../../controllers/admincontroller.dart';
+import '../../controllers/branchcontroller.dart';
 
 class AdminCard extends StatefulWidget {
   AdminCard(
@@ -22,6 +23,7 @@ class AdminCard extends StatefulWidget {
 
 class _AdminCardState extends State<AdminCard> {
   final admincontroller = Get.put(AdminController());
+  final branchcontroller = Get.put(BranchController());
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class _AdminCardState extends State<AdminCard> {
                 Icons.keyboard_arrow_right,
                 size: 40,
               ),
-              admincontroller.superadmin==true ? IconButton(
+              admincontroller.superadmin==true && branchcontroller.adminon? IconButton(
                   onPressed: widget.delet,
                   icon: Icon(
                     Icons.delete,

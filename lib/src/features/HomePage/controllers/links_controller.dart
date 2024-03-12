@@ -29,7 +29,7 @@ class LinkController extends GetxController {
       await _firebasefirestore
           .collection("semester")
           .doc(semestercontroller.semester)
-          .collection(branchcontroller.branch)
+          .collection("Subjects")
           .doc(subjectcontroller.subject.id)
           .collection("Links")
           .add({

@@ -10,6 +10,7 @@ import 'package:mark_it/src/features/HomePage/screens/menu_drawer/menu_drawer.da
 import 'package:mark_it/src/features/HomePage/screens/semseter_screen/add_subject.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subject.dart';
 import 'package:mark_it/src/features/utils/theme/theme.dart';
+import '../../../../repository/pdf_repository/firebasestroegaeapi.dart';
 import '../../../../repository/pdf_repository/pdf_repo.dart';
 import '../../controllers/Material_controller.dart';
 import '../../controllers/admincontroller.dart';
@@ -99,7 +100,7 @@ class _SemesterScreenState extends State<SemesterScreen> {
               stream: FirebaseFirestore.instance
                   .collection("semester")
                   .doc(semestercontroller.semester)
-                  .collection(branchcontroller.branch)
+                  .collection("Subjects").where(branchcontroller.branch, isEqualTo: true)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -132,13 +133,14 @@ class _SemesterScreenState extends State<SemesterScreen> {
                         final delrefrence = firebaseStorage.ref().child(docs[index]["Reference"]);
                         Fluttertoast.showToast(msg: docs[index]["Reference"]);
                         try{
-                          await delrefrence.delete();
+                          await FirebaseStorageApi.deleteFolder(path: docs[index]["Reference"]);
+                          // await delrefrence.delete();
                           await FirebaseFirestore.instance
                               .collection("semester")
                               .doc(semestercontroller.semester)
-                              .collection(branchcontroller.branch)
+                              .collection("Subjects")
                               .doc(docs[index].id).delete();
-                          Fluttertoast.showToast(msg: "file deleted successfully");
+                          Fluttertoast.showToast(msg: "Subject deleted successfully");
 
                         }catch (e){
                           Fluttertoast.showToast(msg: e.toString());
@@ -153,7 +155,7 @@ class _SemesterScreenState extends State<SemesterScreen> {
         ],
       ),
       floatingActionButton: Visibility(
-        visible: admincontroller.admin==true,
+        visible: admincontroller.admin==true && branchcontroller.adminon,
         child: FloatingActionButton(
           child: const Icon(
             Icons.add,

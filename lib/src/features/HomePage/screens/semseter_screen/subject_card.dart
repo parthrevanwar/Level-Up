@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:mark_it/src/features/utils/theme/theme.dart';
 
 import '../../controllers/admincontroller.dart';
+import '../../controllers/branchcontroller.dart';
 
 class SubjectCard extends StatelessWidget {
   SubjectCard({super.key, required this.title, required this.subtitle, required this.press, required this.delet});
@@ -16,6 +17,7 @@ class SubjectCard extends StatelessWidget {
   final VoidCallback delet;
 
   final admincontroller = Get.put(AdminController());
+  final branchcontroller = Get.put(BranchController());
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class SubjectCard extends StatelessWidget {
                   Icons.keyboard_arrow_right,
                   size: 40,
                 ),
-                admincontroller.admin! ==true ?IconButton(onPressed: delet, icon: Icon(Icons.delete,color: Colors.red,)):Container(),
+                admincontroller.admin! ==true && branchcontroller.adminon ?IconButton(onPressed: delet, icon: Icon(Icons.delete,color: Colors.red,)):Container(),
               ],
             ),
             Divider(thickness: 2,color: AppTheme.colors.border,),

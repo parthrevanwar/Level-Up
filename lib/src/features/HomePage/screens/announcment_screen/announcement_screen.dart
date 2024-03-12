@@ -11,6 +11,15 @@ class AnnouncementScreen extends StatefulWidget {
 }
 
 class _AnnouncementScreenState extends State<AnnouncementScreen> {
+
+  int counter = 0;
+
+  void refresh(int childValue) {
+    setState(() {
+      counter = childValue;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +32,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
               width: 2,
             )),
       ),
-      drawer: MenuDrawer(notifyParent: (int ignoreit){},),
+      drawer: MenuDrawer(notifyParent: (counter){refresh(counter);},),
     );
   }
 }

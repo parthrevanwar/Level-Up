@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:mark_it/src/features/utils/theme/theme.dart';
 
 import '../../controllers/admincontroller.dart';
+import '../../controllers/branchcontroller.dart';
 
 class PdfCard extends StatelessWidget {
   PdfCard({super.key, required this.title, required this.press, required this.url, required this.delet});
@@ -15,6 +16,7 @@ class PdfCard extends StatelessWidget {
   final VoidCallback delet;
 
   final admincontroller = Get.put(AdminController());
+  final branchcontroller = Get.put(BranchController());
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class PdfCard extends StatelessWidget {
                   Icons.keyboard_arrow_right,
                   size: 40,
                 ),
-                admincontroller.admin! ==true ? IconButton(onPressed: delet, icon: Icon(Icons.delete,color: Colors.red,)):Container(),
+                admincontroller.admin && branchcontroller.adminon  ==true ? IconButton(onPressed: delet, icon: Icon(Icons.delete,color: Colors.red,)):Container(),
               ],
             ),
             Divider(thickness: 2,color: AppTheme.colors.border,),

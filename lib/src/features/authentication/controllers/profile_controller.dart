@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -13,6 +15,7 @@ class ProfileController extends GetxController{
   final _authRepo= Get.put(AuthenticationRepository());
   final _userRepo= Get.put(UserRepository());
 
+   late UserModel currUser;
 
   getUserData(){
     final email=_authRepo.firebaseUser.value?.email;
@@ -23,4 +26,19 @@ class ProfileController extends GetxController{
       Get.snackbar("Error", "Login to continue");
     }
   }
+
+  Future<void> isdataarrived() async {
+    String? email=FirebaseAuth.instance.currentUser!.email;
+    final adminRef = FirebaseFirestore.instance.collection("Admin");
+    try{
+      final userobj = await adminRef.where("Email", isEqualTo: email).get();
+      final userData = userobj.docs.first;
+      currUser =UserModel.fromSnapshot(userData);
+    }catch(e){
+      Fluttertoast.showToast(msg: "error loading user");
+    }
+
+  }
+
+
 }

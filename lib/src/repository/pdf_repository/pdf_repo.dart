@@ -21,7 +21,7 @@ class PdfRepository extends GetxController {
       String fileName, File file, String subjectname, String type) async {
     try {
       final refrence = firebaseStorage.ref().child(
-          "StudyMaterial/semseter_${semestercontroller.semester}/${branchcontroller.branch}/$subjectname/$type/$fileName");
+          "StudyMaterial/semester_${semestercontroller.semester}/Subjects/$subjectname/$type/$fileName");
       final uplodetask = await refrence.putFile(file);
       final downlodelink = await refrence.getDownloadURL();
       return downlodelink;
@@ -45,12 +45,12 @@ class PdfRepository extends GetxController {
         await _firebasefirestore
             .collection("semester")
             .doc(semestercontroller.semester)
-            .collection(branchcontroller.branch)
+            .collection("Subjects")
             .doc(subjectcontroller.subject.id)
             .collection(type)
             .add({
           "Name": title,
-          "Reference":"StudyMaterial/semseter_${semestercontroller.semester}/${branchcontroller.branch}/${subjectcontroller.subject.name}/$type/$filename",
+          "Reference":"StudyMaterial/semester_${semestercontroller.semester}/Subjects/${subjectcontroller.subject.name}/$type/$filename",
           "Url": url,
         });
         Fluttertoast.showToast(msg: "file upload succesful .");

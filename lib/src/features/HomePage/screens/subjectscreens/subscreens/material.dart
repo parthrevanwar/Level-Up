@@ -42,7 +42,7 @@ class _MaterialScreenState extends State<MaterialScreen> {
         stream: FirebaseFirestore.instance
             .collection("semester")
             .doc(semestercontroller.semester)
-            .collection(branchcontroller.branch)
+            .collection("Subjects")
             .doc(subjectcontroller.subject.id)
             .collection("Material")
             .snapshots(),
@@ -84,7 +84,7 @@ class _MaterialScreenState extends State<MaterialScreen> {
                     await FirebaseFirestore.instance
                         .collection("semester")
                         .doc(semestercontroller.semester)
-                        .collection(branchcontroller.branch)
+                        .collection("Subjects")
                         .doc(subjectcontroller.subject.id)
                         .collection("Material").doc(docs[index].id).delete();
                     Fluttertoast.showToast(msg: "file deleted successfully");

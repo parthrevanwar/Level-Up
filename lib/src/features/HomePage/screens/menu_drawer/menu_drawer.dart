@@ -47,6 +47,23 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ),
                 ),
                 Spacer(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: Transform.scale(
+                    scale: 0.8,
+                    child: CupertinoSwitch(
+                      value: branchcontroller.adminon,
+                      onChanged: (value) {
+                        setState(() {
+                          int counterHolder = widget.counter ?? 0;
+                          counterHolder=0;
+                          widget.notifyParent(counterHolder);
+                          branchcontroller.adminon = value;
+                        });
+                      },
+                    ),
+                  ),
+                ),
                 DropdownButton(
 
 

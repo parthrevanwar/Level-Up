@@ -55,7 +55,7 @@ class _LinksScreenState extends State<LinksScreen> {
         stream: FirebaseFirestore.instance
             .collection("semester")
             .doc(semestercontroller.semester)
-            .collection(branchcontroller.branch)
+            .collection("Subjects")
             .doc(subjectcontroller.subject.id)
             .collection("Links")
             .snapshots(),
@@ -95,7 +95,7 @@ class _LinksScreenState extends State<LinksScreen> {
                             fontWeight: FontWeight.w600, fontSize: 18),
                       ),
                       trailing:
-                      admincontroller.admin! ==true ?
+                      admincontroller.admin ==true && branchcontroller.adminon?
                       IconButton(
                         icon: const Icon(
                           Icons.delete,
@@ -106,7 +106,7 @@ class _LinksScreenState extends State<LinksScreen> {
                             await FirebaseFirestore.instance
                                 .collection("semester")
                                 .doc(semestercontroller.semester)
-                                .collection(branchcontroller.branch)
+                                .collection("Subjects")
                                 .doc(subjectcontroller.subject.id)
                                 .collection("Links").doc(docs[index].id).delete();
                             Fluttertoast.showToast(msg: "Link deleted successfully");

@@ -7,5 +7,6 @@ class BranchController extends GetxController {
     "IT","ITBI","ECE",
   ];
 
+  bool adminon=false;
   String branch="IT";
 }

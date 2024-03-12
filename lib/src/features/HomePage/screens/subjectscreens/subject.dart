@@ -9,6 +9,7 @@ import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subscreens/
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subscreens/pyq.dart';
 import '../../controllers/Material_controller.dart';
 import '../../controllers/admincontroller.dart';
+import '../../controllers/branchcontroller.dart';
 import '../../controllers/pyq_controller.dart';
 import '../../controllers/subject_controller.dart';
 
@@ -27,6 +28,7 @@ class _SubjectScreenState extends State<SubjectScreen>
   final pyqcontroller = Get.put(PYQController());
   final linkcontroller = Get.put(LinkController());
   final admincontroller = Get.put(AdminController());
+  final branchcontroller = Get.put(BranchController());
 
   late TabController _tabController;
 
@@ -92,7 +94,7 @@ class _SubjectScreenState extends State<SubjectScreen>
         ],
       ),
       floatingActionButton: Visibility(
-        visible: admincontroller.admin == true ,
+        visible: admincontroller.admin == true && branchcontroller.adminon,
         child: FloatingActionButton(
           child: const Icon(
             Icons.add,

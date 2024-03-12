@@ -44,7 +44,7 @@ class _PYQScreenState extends State<PYQScreen> {
         stream: FirebaseFirestore.instance
             .collection("semester")
             .doc(semestercontroller.semester)
-            .collection(branchcontroller.branch)
+            .collection("Subjects")
             .doc(subjectcontroller.subject.id)
             .collection("PYQ")
             .snapshots(),
@@ -87,7 +87,7 @@ class _PYQScreenState extends State<PYQScreen> {
                     await FirebaseFirestore.instance
                         .collection("semester")
                         .doc(semestercontroller.semester)
-                        .collection(branchcontroller.branch)
+                        .collection("Subjects")
                         .doc(subjectcontroller.subject.id)
                         .collection("PYQ")
                         .doc(docs[index].id)

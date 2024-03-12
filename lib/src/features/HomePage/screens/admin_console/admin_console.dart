@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../../utils/theme/theme.dart';
 import '../../controllers/admincontroller.dart';
+import '../../controllers/branchcontroller.dart';
 import '../menu_drawer/menu_drawer.dart';
 import 'add_admin.dart';
 import 'admin_card.dart';
@@ -19,11 +20,17 @@ class AdminConsole extends StatefulWidget {
 class _AdminConsoleState extends State<AdminConsole> {
 
   final admincontroller = Get.put(AdminController());
+  final branchcontroller = Get.put(BranchController());
 
-  @override
-  void initState() {
-    super.initState();
+
+  int counter = 0;
+
+  void refresh(int childValue) {
+    setState(() {
+      counter = childValue;
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +44,7 @@ class _AdminConsoleState extends State<AdminConsole> {
               width: 2,
             )),
       ),
-      drawer: MenuDrawer(notifyParent: (int ignoreit){},),
+      drawer: MenuDrawer(notifyParent: (counter){refresh(counter);},),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
         child: StreamBuilder(
@@ -115,7 +122,7 @@ class _AdminConsoleState extends State<AdminConsole> {
         ),
       ),
       floatingActionButton: Visibility(
-        visible: admincontroller.superadmin==true,
+        visible: admincontroller.superadmin==true && branchcontroller.adminon,
         child: FloatingActionButton(
           child: const Icon(
             Icons.add,

@@ -30,7 +30,7 @@ class MaterialController extends GetxController {
       final result = await _firebasefirestore
           .collection("semester")
           .doc(semestercontroller.semester)
-          .collection(branchcontroller.branch)
+          .collection("Subjects")
           .doc(subjectcontroller.subject.id)
           .collection("Material").get();
       return result.docs.map((e) => PdfModel.fromSnapshot(e)).toList();
