@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 class AdminController extends GetxController {
   static AdminController get instance => Get.find();
 
-  bool? admin =false  ;
-  bool? superadmin = false  ;
+  late bool admin ;
+  late bool superadmin ;
 
   final newadminname = TextEditingController();
   final newadminemail = TextEditingController();
@@ -17,13 +17,22 @@ class AdminController extends GetxController {
   Future<void> isadmin() async {
     String? email=FirebaseAuth.instance.currentUser!.email;
     final adminRef = FirebaseFirestore.instance.collection("Admin");
-    final userobj = await adminRef.where("Email", isEqualTo: email).get();
-    if (userobj.docs.isNotEmpty) {
-      final userData = userobj.docs.first.data();
-      admin = userData["Admin"];
-      superadmin=userData["SuperAdmin"];
-      Fluttertoast.showToast(msg: "admin: $admin,superadmin: $superadmin");
+    try{
+      final userobj = await adminRef.where("Email", isEqualTo: email).get();
+      if (userobj.docs.isNotEmpty) {
+        final userData = userobj.docs.first.data();
+        admin = userData["Admin"];
+        superadmin=userData["SuperAdmin"];
+        Fluttertoast.showToast(msg: "admin: $admin,superadmin: $superadmin");
+      }else{
+        admin=false;
+        superadmin=false;
+      }
+    }catch(e){
+      admin=false;
+      superadmin=false;
     }
+
   }
   Future<void> addadmin() async {
     try {

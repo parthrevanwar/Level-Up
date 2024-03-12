@@ -37,9 +37,14 @@ class _SemesterScreenState extends State<SemesterScreen> {
 
   void refresh(int childValue) {
     setState(() {
-      admincontroller.isadmin();
       counter = childValue;
     });
+  }
+
+  @override
+  void initState() {
+    admincontroller.isadmin();
+    super.initState();
   }
 
   @override

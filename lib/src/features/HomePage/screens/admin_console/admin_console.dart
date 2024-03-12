@@ -20,6 +20,10 @@ class _AdminConsoleState extends State<AdminConsole> {
 
   final admincontroller = Get.put(AdminController());
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,15 +63,19 @@ class _AdminConsoleState extends State<AdminConsole> {
               itemBuilder: (context, index) {
                 return AdminCard(
                 delet: () async {
-                  try{
-                    await FirebaseFirestore.instance
-                        .collection("Admin")
-                        .doc(docs[index].id).delete();
-                    Fluttertoast.showToast(msg: "admin removed successfully");
-                  }catch (e){
-                    Fluttertoast.showToast(msg: e.toString());
+                  if(docs[index]["SuperAdmin"]==true){
+                    Fluttertoast.showToast(msg: "Operation not allowed");
                   }
-
+                  else{
+                    try{
+                      await FirebaseFirestore.instance
+                          .collection("Admin")
+                          .doc(docs[index].id).delete();
+                      Fluttertoast.showToast(msg: "admin removed successfully");
+                    }catch (e){
+                      Fluttertoast.showToast(msg: e.toString());
+                    }
+                  }
                 },
                 Name: docs[index]["Name"],
                 email: docs[index]["Email"],);
@@ -107,7 +115,7 @@ class _AdminConsoleState extends State<AdminConsole> {
         ),
       ),
       floatingActionButton: Visibility(
-        visible: admincontroller.admin==true && admincontroller.superadmin==true,
+        visible: admincontroller.superadmin==true,
         child: FloatingActionButton(
           child: const Icon(
             Icons.add,

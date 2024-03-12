@@ -3,23 +3,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  final String? id;
+  final String? uid;
   final String username;
   final String? email;
-  final String? semester;
+  final String? collage;
+  final String? branch;
+  final String? year;
+  final String? rollno;
+  final String? photourl;
 
   const UserModel({
-    this.id,
-    required this.email,
+    this.uid,
     required this.username,
-    required this.semester,
+    required this.email,
+    required this.collage,
+    required this.branch,
+    required this.year,
+    required this.rollno,
+    required this.photourl,
   });
 
   toJson() {
     return {
+      "uid": uid,
       "UserName": username,
       "Email": email,
-      "Semester": semester,
+      "Collage": collage,
+      "Branch": branch,
+      "Year": year,
+      "RollNumber": rollno,
+      "photoURL": photourl,
     };
   }
 
@@ -27,10 +40,14 @@ class UserModel {
       DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data();
     return UserModel(
-      id: document.id,
-      email: data!["Email"],
+      uid: document.id,
+      collage: data!["Collage"],
+      branch: data["Branch"],
+      year: data["Year"],
+      rollno: data["RollNumber"],
+      photourl: data["photoURL"],
       username: data["UserName"],
-      semester: data["Semester"],
+      email: data["Email"],
     );
   }
 }
