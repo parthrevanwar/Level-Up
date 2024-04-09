@@ -47,6 +47,10 @@ dependencies:
   file_picker: ^6.2.0
   flutter_cached_pdfview: ^0.4.2
   url_launcher: ^6.2.5
+  font_awesome_flutter: ^10.7.0
+  share_plus: ^8.0.2
+  circle_list: ^1.0.5
+  flutter_speed_dial: ^7.0.0
 
 dev_dependencies:
   flutter_test:
@@ -75,7 +79,9 @@ flutter:
    - assets/icons/book.svg
    - assets/images/mailverification.png
    - assets/images/facebook.png
-   - assets/images/greentick.svg
+   - assets/images/
+   - assets/grey icons/
+   - assets/svgIcons/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -24,13 +24,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppTheme.colors.white,
         title: Text("Announcements"),
-        shape: Border(
-            bottom: BorderSide(
-              color: AppTheme.colors.lightgray,
-              width: 2,
-            )),
       ),
       drawer: MenuDrawer(notifyParent: (counter){refresh(counter);},),
     );

@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mark_it/src/common_widgets/loadingscreen.dart';
 import 'package:mark_it/src/features/authentication/models/user.dart';
 import 'package:mark_it/src/features/authentication/screens/working_screens/signin_screen.dart';
 import '../../features/HomePage/controllers/admincontroller.dart';
@@ -41,6 +42,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   setadmin() async {
+    Get.offAll(() => LoadingScreen());
     await admincontroller.isadmin();
     Get.offAll(() => SemesterScreen());
   }

@@ -19,7 +19,7 @@ class CustomElevetedButtonDark extends StatelessWidget {
           style: TextStyle(color: Colors.white, fontSize: 18),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppTheme.colors.black,
+          backgroundColor: AppTheme.colors.DARK_SKYBLUE,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),

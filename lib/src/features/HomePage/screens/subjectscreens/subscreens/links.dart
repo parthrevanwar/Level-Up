@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:mark_it/src/features/HomePage/screens/subjectscreens/linkcard.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../../repository/pdf_repository/pdf_repo.dart';
 import '../../../controllers/Material_controller.dart';
@@ -77,58 +78,82 @@ class _LinksScreenState extends State<LinksScreen> {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: docs.length,
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                child: Container(
-                  height: 60,
-                  child: Card(
-                    shadowColor: Color.fromRGBO(0, 0, 0, 0.75),
-                    elevation: 2,
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        docs[index]["Title"],
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18),
-                      ),
-                      trailing:
-                      admincontroller.admin ==true && branchcontroller.adminon?
-                      IconButton(
-                        icon: const Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ),
-                        onPressed: () async {
-                          try{
-                            await FirebaseFirestore.instance
-                                .collection("semester")
-                                .doc(semestercontroller.semester)
-                                .collection("Subjects")
-                                .doc(subjectcontroller.subject.id)
-                                .collection("Links").doc(docs[index].id).delete();
-                            Fluttertoast.showToast(msg: "Link deleted successfully");
-                          }catch (e){
-                            Fluttertoast.showToast(msg: e.toString());
-                          }
-                        },
-                      ):
-                      IconButton(
-                        icon: const Icon(Icons.link),
-                        onPressed: () {
-                          final Uri uri = Uri(
-                              scheme: "https", host: docs[index]["Link"]);
-                          setState(() {
-                            _launched = _launchInBrowser(uri);
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ),
+              return LinkCard(
+                title: docs[index]["Title"],
+                press: () async {
+                  final Uri uri = Uri(
+                      scheme: "https", host: docs[index]["Link"]);
+                  setState(() {
+                    _launched = _launchInBrowser(uri);
+                  });
+
+                },
+                delet: () async{
+                  try{
+                    await FirebaseFirestore.instance
+                        .collection("semester")
+                        .doc(semestercontroller.semester)
+                        .collection("Subjects")
+                        .doc(subjectcontroller.subject.id)
+                        .collection("Links").doc(docs[index].id).delete();
+                    Fluttertoast.showToast(msg: "Link deleted successfully");
+                  }catch (e){
+                    Fluttertoast.showToast(msg: e.toString());
+                  }
+                },
               );
+              // return Padding(
+              //   padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+              //   child: Container(
+              //     height: 60,
+              //     child: Card(
+              //       shadowColor: Color.fromRGBO(0, 0, 0, 0.75),
+              //       elevation: 2,
+              //       color: Colors.white,
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(8),
+              //       ),
+              //       child: ListTile(
+              //         title: Text(
+              //           docs[index]["Title"],
+              //           style: const TextStyle(
+              //               fontWeight: FontWeight.w600, fontSize: 18),
+              //         ),
+              //         trailing:
+              //         admincontroller.admin ==true && branchcontroller.adminon?
+              //         IconButton(
+              //           icon: const Icon(
+              //             Icons.delete,
+              //             color: Colors.red,
+              //           ),
+              //           onPressed: () async {
+              //             try{
+              //               await FirebaseFirestore.instance
+              //                   .collection("semester")
+              //                   .doc(semestercontroller.semester)
+              //                   .collection("Subjects")
+              //                   .doc(subjectcontroller.subject.id)
+              //                   .collection("Links").doc(docs[index].id).delete();
+              //               Fluttertoast.showToast(msg: "Link deleted successfully");
+              //             }catch (e){
+              //               Fluttertoast.showToast(msg: e.toString());
+              //             }
+              //           },
+              //         ):
+              //         IconButton(
+              //           icon: const Icon(Icons.link),
+              //           onPressed: () {
+              //             final Uri uri = Uri(
+              //                 scheme: "https", host: docs[index]["Link"]);
+              //             setState(() {
+              //               _launched = _launchInBrowser(uri);
+              //             });
+              //           },
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // );
             },
           );
         },

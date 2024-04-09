@@ -7,6 +7,7 @@ import 'package:mark_it/src/features/HomePage/screens/subjectscreens/add_data/ad
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subscreens/links.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subscreens/material.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/subscreens/pyq.dart';
+import '../../../utils/theme/theme.dart';
 import '../../controllers/Material_controller.dart';
 import '../../controllers/admincontroller.dart';
 import '../../controllers/branchcontroller.dart';
@@ -15,7 +16,6 @@ import '../../controllers/subject_controller.dart';
 
 class SubjectScreen extends StatefulWidget {
   const SubjectScreen({super.key});
-
 
   @override
   State<SubjectScreen> createState() => _SubjectScreenState();
@@ -48,81 +48,86 @@ class _SubjectScreenState extends State<SubjectScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+        backgroundColor: AppTheme.colors.DARK_SKYBLUE,
         title: Text(
-          subjectcontroller.subject.name,
+          subjectcontroller.subject.shortform,
           style: TextStyle(
-              color: Colors.black, fontSize: 25.0, fontWeight: FontWeight.w600),
+              color: Colors.white,
+              fontSize: 24,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold),
         ),
         leading: BackButton(),
-        backgroundColor: Colors.white,
         bottom: TabBar(
-          tabs: [
+          tabs: const [
             Tab(
-              child: Text(
-                "Material",
-                style: TextStyle(fontSize: 18),
-              ),
+              icon: ImageIcon(AssetImage('assets/svgIcons/book.png')),
+              text: "Material",
             ),
             Tab(
-              child: Text(
-                "Links",
-                style: TextStyle(fontSize: 18),
-              ),
+              icon: ImageIcon(AssetImage('assets/svgIcons/link.png')),
+              text: "Links",
             ),
             Tab(
-              child: Text(
-                "PYQ",
-                style: TextStyle(fontSize: 18),
-              ),
+              icon: ImageIcon(AssetImage('assets/svgIcons/pencil.png')),
+              text: "Q. Paper",
             ),
           ],
-          indicatorColor: Color.fromARGB(255, 32, 159, 166),
           controller: _tabController,
-          labelColor: Color.fromARGB(255, 32, 159, 166),
+          labelColor: Colors.white,
           indicatorSize: TabBarIndicatorSize.tab,
+          indicatorWeight: 4,
+          indicatorPadding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+          indicatorColor: Colors.white,
+          labelStyle:
+              TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+          unselectedLabelColor: AppTheme.colors.SKYBLUE,
+          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
         ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
-          MaterialScreen(
-          ),
-          LinksScreen(
-          ),
-          PYQScreen(
-          ),
+          MaterialScreen(),
+          LinksScreen(),
+          PYQScreen(),
         ],
       ),
       floatingActionButton: Visibility(
-        visible: admincontroller.admin == true && branchcontroller.adminon,
+        visible: admincontroller.admin == true &&
+            (admincontroller.subjects
+                    .contains(subjectcontroller.subject.shortform) ||
+                admincontroller.subjects.contains("all")),
         child: FloatingActionButton(
+          backgroundColor: AppTheme.colors.DARK_SKYBLUE,
           child: const Icon(
             Icons.add,
+            color: Colors.white,
           ),
           onPressed: () {
-            switch(_tabController.index){
+            switch (_tabController.index) {
               case 0:
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          AddMaterial(),
+                      builder: (BuildContext context) => AddMaterial(),
                     ));
                 break;
               case 1:
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          AddLink(),
+                      builder: (BuildContext context) => AddLink(),
                     ));
                 break;
               case 2:
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          AddPYQ(),
+                      builder: (BuildContext context) => AddPYQ(),
                     ));
                 break;
             }

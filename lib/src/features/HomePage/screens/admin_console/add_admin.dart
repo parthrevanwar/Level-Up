@@ -25,13 +25,7 @@ class _AddAdminState extends State<AddAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: AppTheme.colors.white,
           title: Text("Add Admin"),
-          shape: Border(
-              bottom: BorderSide(
-                color: AppTheme.colors.lightgray,
-                width: 2,
-              )),
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
@@ -48,6 +42,12 @@ class _AddAdminState extends State<AddAdmin> {
                   textcontroller: admincontroller.newadminemail,
                   hinttext: "add email",
                   labeltext: "Email"),
+              SizedBox(
+                height: 10,
+              ),MultilineCustomTextField(
+                  textcontroller: admincontroller.newadminsubjects,
+                  hinttext: "add subjects seperated by comma",
+                  labeltext: "Subjects"),
               SizedBox(
                 height: 20,
               ),

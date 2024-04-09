@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
 class NavItem extends StatelessWidget {
-  NavItem({this.iconData, this.title, required this.onPressed, this.color, required this.isSelected});
+  NavItem(
+      {this.iconData, this.title, required this.onPressed, this.color, required this.isSelected});
   final title;
   final iconData;
+  final Function onPressed;
   final color;
-  VoidCallbackAction onPressed;
   bool isSelected = false;
-
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,7 +17,7 @@ class NavItem extends StatelessWidget {
       child: ListTile(
         title: title,
         leading: iconData,
-        onTap: (){},
+        onTap: onPressed(),
       ),
     );
   }

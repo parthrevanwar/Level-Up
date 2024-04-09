@@ -8,7 +8,12 @@ import '../../controllers/admincontroller.dart';
 import '../../controllers/branchcontroller.dart';
 
 class SubjectCard extends StatelessWidget {
-  SubjectCard({super.key, required this.title, required this.subtitle, required this.press, required this.delet});
+  SubjectCard(
+      {super.key,
+      required this.title,
+      required this.subtitle,
+      required this.press,
+      required this.delet});
 
   final title;
   final subtitle;
@@ -29,9 +34,9 @@ class SubjectCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                SvgPicture.asset(
-                  "assets/icons/book.svg",
-                  width: 40,
+                Image.asset(
+                  'assets/images/Computer.png',
+                  height: 32,
                 ),
                 const SizedBox(
                   width: 20,
@@ -42,16 +47,17 @@ class SubjectCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                        ),
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
                       ),
                       Text(
                         subtitle,
                         style: TextStyle(
-                          fontSize: 14,
-                        ),
+                            color: AppTheme.colors.STEEL,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
@@ -61,12 +67,23 @@ class SubjectCard extends StatelessWidget {
                 ),
                 const Icon(
                   Icons.keyboard_arrow_right,
-                  size: 40,
+                  size: 36,
                 ),
-                admincontroller.admin! ==true && branchcontroller.adminon ?IconButton(onPressed: delet, icon: Icon(Icons.delete,color: Colors.red,)):Container(),
+                admincontroller.superadmin == true
+                    ? IconButton(
+                        onPressed: delet,
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ))
+                    : Container(),
               ],
             ),
-            Divider(thickness: 2,color: AppTheme.colors.border,),
+            const SizedBox(height: 10,),
+            Divider(
+              thickness: 1,
+              color: AppTheme.colors.border,
+            ),
           ],
         ),
       ),
