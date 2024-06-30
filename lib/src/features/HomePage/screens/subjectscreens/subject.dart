@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:mark_it/src/features/HomePage/controllers/links_controller.dart';
 import 'package:mark_it/src/features/HomePage/screens/subjectscreens/add_data/add_link.dart';
@@ -13,6 +14,7 @@ import '../../controllers/admincontroller.dart';
 import '../../controllers/branchcontroller.dart';
 import '../../controllers/pyq_controller.dart';
 import '../../controllers/subject_controller.dart';
+import '../admin_console/add_admin.dart';
 
 class SubjectScreen extends StatefulWidget {
   const SubjectScreen({super.key});
@@ -31,6 +33,8 @@ class _SubjectScreenState extends State<SubjectScreen>
   final branchcontroller = Get.put(BranchController());
 
   late TabController _tabController;
+
+  List<String> buttonname=["Add Material","Add Link","Add PYQ"];
 
   @override
   void initState() {
@@ -96,43 +100,79 @@ class _SubjectScreenState extends State<SubjectScreen>
           PYQScreen(),
         ],
       ),
-      floatingActionButton: Visibility(
-        visible: admincontroller.admin == true &&
-            (admincontroller.subjects
-                    .contains(subjectcontroller.subject.shortform) ||
-                admincontroller.subjects.contains("all")),
-        child: FloatingActionButton(
-          backgroundColor: AppTheme.colors.DARK_SKYBLUE,
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
+      floatingActionButton: SpeedDial(
+        icon: Icons.edit,
+        activeIcon: Icons.close,
+        backgroundColor: AppTheme.colors.DARK_SKYBLUE,
+        foregroundColor: Colors.white,
+        activeForegroundColor: Colors.white,
+        visible: true,
+        closeManually: false,
+        curve: Curves.bounceIn,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.5,
+        onOpen: () => print('OPENING DIAL'),
+        onClose: () => print('DIAL CLOSED'),
+        elevation: 8.0,
+        shape: CircleBorder(),
+        children: [
+          SpeedDialChild(
+            //speed dial child
+            child: Icon(Icons.accessibility),
+            backgroundColor: AppTheme.colors.DARK_SKYBLUE,
+            foregroundColor: Colors.white,
+            label: 'Add Admin',
+            labelStyle: TextStyle(
+              fontSize: 12.0,
+              fontFamily: 'Montserrat',
+            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => AddAdmin()));
+            },
           ),
-          onPressed: () {
-            switch (_tabController.index) {
-              case 0:
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => AddMaterial(),
-                    ));
-                break;
-              case 1:
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => AddLink(),
-                    ));
-                break;
-              case 2:
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => AddPYQ(),
-                    ));
-                break;
-            }
-          },
-        ),
+          if (admincontroller.admin == true &&
+              (admincontroller.subjects
+                      .contains(subjectcontroller.subject.shortform) ||
+                  admincontroller.subjects.contains("all")))
+            SpeedDialChild(
+              child: Icon(Icons.add),
+              backgroundColor: AppTheme.colors.DARK_SKYBLUE,
+              foregroundColor: Colors.white,
+              label: buttonname[_tabController.index],
+              labelStyle: TextStyle(
+                fontSize: 12.0,
+                fontFamily: 'Montserrat',
+              ),
+              onTap: () {
+                switch (_tabController.index) {
+                  case 0:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => AddMaterial(),
+                        ));
+                    break;
+                  case 1:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => AddLink(),
+                        ));
+                    break;
+                  case 2:
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => AddPYQ(),
+                        ));
+                    break;
+                }
+              },
+            ),
+        ],
       ),
     );
   }
